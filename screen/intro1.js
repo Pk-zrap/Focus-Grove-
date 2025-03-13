@@ -14,7 +14,7 @@ const Intro1 = () => {
 
   // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
   const goToHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("DrawerNavigator");
   };
 
   return (

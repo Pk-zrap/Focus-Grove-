@@ -14,7 +14,7 @@ const Intro2 = () => {
 
   // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
   const goToHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("DrawerNavigator");
   };
 
   return (
@@ -22,7 +22,7 @@ const Intro2 = () => {
       {/* ส่วนของรูปภาพ */}
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/Intro1.png")}
+          source={require("../assets/Intro2.png")}
           style={styles.plantImage}
         />
       </View>

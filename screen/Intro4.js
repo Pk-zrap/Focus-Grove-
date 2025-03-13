@@ -9,12 +9,12 @@ const Intro4 = () => {
   // ฟังก์ชันที่ใช้ในการนำทางเมื่อกดปุ่ม NEXT
   const goToNext = () => {
     // ใช้ฟังก์ชัน navigate เพื่อนำทางไปยังหน้า Intro2
-    navigation.navigate("Home");
+    navigation.navigate("DrawerNavigator");
   };
 
   // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
   const goToHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("DrawerNavigator");
   };
 
   return (
@@ -22,7 +22,7 @@ const Intro4 = () => {
       {/* ส่วนของรูปภาพ */}
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/Intro1.png")}
+          source={require("../assets/Intro4.png")}
           style={styles.plantImage}
         />
       </View>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   plantImage: {
     width: 300, // กำหนดความกว้างของรูป
     height: 261, // กำหนดความสูงของรูป
+    borderRadius: 12, // กำหนดความโค้งมนของมุม
   },
   textContainer: {
     alignItems: "center", // จัดข้อความให้อยู่กลาง

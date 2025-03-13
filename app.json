@@ -25,7 +25,9 @@
       "favicon": "./assets/favicon.png"
     },
     "fonts": {
-      "Sen": "./assets/fonts/Sen-VariableFont_wght.ttf"
+      "Sen": "./assets/fonts/Sen-VariableFont_wght.ttf",
+      "Mitr_Regular": "./assets/fonts/Mitr-Regular.ttf",
+      "Mitr_Bold": "./assets/fonts/Mitr-Bold.ttf"
     }
   }
 }

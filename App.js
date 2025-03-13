@@ -6,16 +6,21 @@ import Intro2 from "./screen/Intro2";
 import Intro3 from "./screen/Intro3";
 import Intro4 from "./screen/Intro4";
 import Home from "./screen/Home";
+import DrawerNavigator from "./components/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer"; // Import Drawer
 import { useFonts } from "expo-font";
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator(); // Create Drawer Navigator
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [fontsloaded] = useFonts({
     Sen: require("./assets/fonts/Sen-VariableFont_wght.ttf"),
+    Mitr_Regular: require("./assets/fonts/Mitr-Regular.ttf"),
+    Mitr_Bold: require("./assets/fonts/Mitr-Bold.ttf"),
   });
 
   useEffect(() => {
@@ -31,6 +36,19 @@ const App = () => {
       </View>
     );
   }
+
+  // Drawer Navigator function
+  const DrawerNavigator = () => (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="สมุดบันทึกต้นไม้" component={Home} />
+      <Drawer.Screen name="ความท้าทายประจำวัน" component={Home} />
+      <Drawer.Screen name="ความสำเร็จ" component={Home} />
+      <Drawer.Screen name="ร้านค้า" component={Home} />
+      <Drawer.Screen name="ข่าวสาร" component={Home} />
+      <Drawer.Screen name="การตั้งค่า" component={Home} />
+    </Drawer.Navigator>
+  );
 
   return (
     <NavigationContainer>
@@ -64,9 +82,9 @@ const App = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
+              name="DrawerNavigator"
+              component={DrawerNavigator} // Show Drawer Navigation in this screen
+              options={{ headerShown: false }} // Optional, depending on your UI design
             />
           </>
         )}

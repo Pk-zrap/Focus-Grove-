@@ -14,7 +14,7 @@ const Intro3 = () => {
 
   // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
   const goToHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("DrawerNavigator");
   };
 
   return (
@@ -22,7 +22,7 @@ const Intro3 = () => {
       {/* ส่วนของรูปภาพ */}
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/Intro1.png")}
+          source={require("../assets/Intro3.jpg")}
           style={styles.plantImage}
         />
       </View>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   plantImage: {
     width: 300, // กำหนดความกว้างของรูป
     height: 261, // กำหนดความสูงของรูป
+    borderRadius: 12, // กำหนดความโค้งมนของมุม
   },
   textContainer: {
     alignItems: "center", // จัดข้อความให้อยู่กลาง
