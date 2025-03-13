@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Load from "./screen/Loading";
-import Intro1 from "./screen/intro1";
+import Intro1 from "./screen/Intro1"
+import Intro2 from "./screen/Intro2";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font";
+
+const Stack = createStackNavigator();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +30,30 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>{isLoading ? <Load /> : <Intro1 />}</View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {isLoading ? (
+          <Stack.Screen
+            name="Loading"
+            component={Load}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
+            <Stack.Screen
+              name="Intro1"
+              component={Intro1}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Intro2"
+              component={Intro2}
+              options={{ headerShown: false }}
+            />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
