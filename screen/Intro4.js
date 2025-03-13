@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const Intro2 = () => {
+const Intro4 = () => {
   // สร้างตัวแปร navigation ที่ใช้ในการนำทางระหว่างหน้า
   const navigation = useNavigation();
 
   // ฟังก์ชันที่ใช้ในการนำทางเมื่อกดปุ่ม NEXT
   const goToNext = () => {
     // ใช้ฟังก์ชัน navigate เพื่อนำทางไปยังหน้า Intro2
-    navigation.navigate("Intro3");
+    navigation.navigate("Home");
   };
 
   // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
@@ -29,22 +29,22 @@ const Intro2 = () => {
 
       {/* ส่วนของข้อความ Title */}
       <View style={styles.textContainer}>
-        <Text style={styles.title}>เลือกเมล็ดพันธุ์</Text>
+        <Text style={styles.title}>ยินดีต้อนรับสู่ Focus Grove!</Text>
         {/* แสดงข้อความ Title */}
       </View>
 
       {/* ส่วนของข้อความ Subtitle */}
       <Text style={styles.subtitle}>
-        เลือกเมล็ดพันธุ์ที่คุณชื่นชอบ เริ่มต้นการโฟกัสและเฝ้าดูการเติบโต
+        เริ่มต้นการเดินทางสู่สมาธิและความสำเร็จของคุณ
       </Text>
       {/* แสดงข้อความ Subtitle */}
 
       {/* ส่วนของ Dot Indicators (ก่อนปุ่ม NEXT) */}
       <View style={styles.dotsContainer}>
         <View style={styles.dot} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
         <View style={styles.dotActive} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
       </View>
       {/* แสดง dot indicators สำหรับแสดงตำแหน่งปัจจุบัน */}
 
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Intro2;
+export default Intro4;

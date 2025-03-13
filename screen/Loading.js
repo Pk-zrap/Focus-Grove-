@@ -12,8 +12,9 @@ const Load = () => {
 
 const styles = StyleSheet.create({
   content: {
-    width: "100%", // ขยายให้เต็มความกว้างของหน้าจอ
-    alignItems: "center", // จัดตำแหน่งให้ตรงกลาง
+    flex: 1, // ใช้ flex 1 เพื่อให้ View ขยายเต็มพื้นที่
+    justifyContent: "center", // จัดตำแหน่งในแนวแกน Y ให้อยู่กลาง
+    alignItems: "center", // จัดตำแหน่งในแนวแกน X ให้อยู่กลาง
   },
   treeImage: {
     width: 88, // กำหนดความกว้างของรูป
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold", // ความหนาของตัวอักษร
     fontFamily: "Sen", // ฟอนต์ที่ใช้
     color: "#343334", // สีของข้อความ
+    marginTop: 20, // เพิ่มระยะห่างระหว่างรูปกับข้อความ
   },
 });
 

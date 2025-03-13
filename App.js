@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Load from "./screen/Loading";
-import Intro1 from "./screen/Intro1"
+import Intro1 from "./screen/Intro1";
 import Intro2 from "./screen/Intro2";
+import Intro3 from "./screen/Intro3";
+import Intro4 from "./screen/Intro4";
+import Home from "./screen/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font";
@@ -48,6 +51,21 @@ const App = () => {
             <Stack.Screen
               name="Intro2"
               component={Intro2}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Intro3"
+              component={Intro3}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Intro4"
+              component={Intro4}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
               options={{ headerShown: false }}
             />
           </>
