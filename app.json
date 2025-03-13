@@ -23,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "fonts": {
+      "Sen": "./assets/fonts/Sen-VariableFont_wght.ttf"
     }
   }
 }

@@ -12,21 +12,18 @@ const Load = () => {
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "white",
-    width: "80%",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
+    width: "100%", // ขยายให้เต็มความกว้างของหน้าจอ
+    alignItems: "center", // จัดตำแหน่งให้ตรงกลาง
   },
   treeImage: {
-    width: 150,
-    height: 150,
-    resizeMode: "contain",
+    width: 88, // กำหนดความกว้างของรูป
+    height: 88, // กำหนดความสูงของรูป
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 20,
+    fontSize: 40, // ขนาดของตัวอักษร
+    fontWeight: "bold", // ความหนาของตัวอักษร
+    fontFamily: "Sen", // ฟอนต์ที่ใช้
+    color: "#343334", // สีของข้อความ
   },
 });
 
