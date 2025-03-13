@@ -5,11 +5,19 @@ import Intro1 from "./screen/Intro1";
 import Intro2 from "./screen/Intro2";
 import Intro3 from "./screen/Intro3";
 import Intro4 from "./screen/Intro4";
+
 import Home from "./screen/Home";
+import TreeJournal from "./screen/TreeJournal";
+import Achievement from "./screen/Achievement";
+import DailyChallenges from "./screen/DailyChallenges";
+import News from "./screen/News";
+
 import DrawerNavigator from "./components/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer"; // Import Drawer
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import { useFonts } from "expo-font";
 
 const Stack = createStackNavigator();
@@ -41,11 +49,11 @@ const App = () => {
   const DrawerNavigator = () => (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="สมุดบันทึกต้นไม้" component={Home} />
-      <Drawer.Screen name="ความท้าทายประจำวัน" component={Home} />
-      <Drawer.Screen name="ความสำเร็จ" component={Home} />
+      <Drawer.Screen name="สมุดบันทึกต้นไม้" component={TreeJournal} />
+      <Drawer.Screen name="ความท้าทายประจำวัน" component={DailyChallenges} />
+      <Drawer.Screen name="ความสำเร็จ" component={Achievement} />
       <Drawer.Screen name="ร้านค้า" component={Home} />
-      <Drawer.Screen name="ข่าวสาร" component={Home} />
+      <Drawer.Screen name="ข่าวสาร" component={News} />
       <Drawer.Screen name="การตั้งค่า" component={Home} />
     </Drawer.Navigator>
   );
