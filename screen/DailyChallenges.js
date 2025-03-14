@@ -11,7 +11,7 @@ const DailyChallenges = () => {
       
       {/* Daily Challenges List */}
       <View style={styles.challengesList}>
-      <Text style={styles.title}>ยินดีต้อนรับสู่หน้า Home</Text>
+      <Text style={styles.title}>กิจกรรมประจำวัน</Text>
         <DailyChallengesList
           achievementName="โฟกัสติดต่อกันอย่างน้อย 30 นาที"
           progress={0.3}

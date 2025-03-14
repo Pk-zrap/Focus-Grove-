@@ -27,13 +27,15 @@ const styles = StyleSheet.create({
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 5,
-      elevation: 2, // เพิ่มเงา
+      elevation: 2, 
     },
     image: {
       width: 100,
       height: 100,
       resizeMode: 'contain',
       marginBottom: 10,
+      borderRadius: 10,
+
     },
   });
   

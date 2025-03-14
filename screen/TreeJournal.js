@@ -117,10 +117,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#4CAF50", // สีเมื่อเลือกหมวดหมู่
   },
   progressText: {
-    fontSize: 18,
+    fontSize: 14,
     marginBottom: 10,
     textAlign: "center",
-    fontWeight: "bold",
   },
   itemList: {
     flexDirection: "row",
