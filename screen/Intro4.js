@@ -12,11 +12,6 @@ const Intro4 = () => {
     navigation.navigate("DrawerNavigator");
   };
 
-  // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
-  const goToHome = () => {
-    navigation.navigate("DrawerNavigator");
-  };
-
   return (
     <View style={styles.container}>
       {/* ส่วนของรูปภาพ */}
@@ -51,11 +46,6 @@ const Intro4 = () => {
       {/* ปุ่ม NEXT */}
       <TouchableOpacity style={styles.button} onPress={goToNext}>
         <Text style={styles.buttonText}>NEXT</Text>
-      </TouchableOpacity>
-
-      {/* ปุ่ม Skip */}
-      <TouchableOpacity style={styles.skipButton} onPress={goToHome}>
-        <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
     </View>
   );
@@ -123,14 +113,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold", // ความหนาของข้อความในปุ่ม
     fontSize: 14, // ขนาดตัวอักษรในปุ่ม
     fontFamily: "Sen", // ฟอนต์ที่ใช้ในปุ่ม
-  },
-  skipButton: {
-    alignItems: "center", // จัดข้อความในปุ่ม Skip ให้อยู่กลาง
-  },
-  skipText: {
-    color: "#646982", // สีของข้อความในปุ่ม Skip
-    fontSize: 16, // ขนาดตัวอักษรในปุ่ม Skip
-    fontFamily: "Sen",
   },
 });
 
