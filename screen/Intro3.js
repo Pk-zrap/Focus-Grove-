@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
     marginBottom: 40, // ระยะห่างจากรูปไปยังข้อความ Title
   },
   plantImage: {
-    width: 300, // กำหนดความกว้างของรูป
-    height: 261, // กำหนดความสูงของรูป
+    width: 286, // กำหนดความกว้างของรูป
+    height: 292, // กำหนดความสูงของรูป
     borderRadius: 12, // กำหนดความโค้งมนของมุม
   },
   textContainer: {

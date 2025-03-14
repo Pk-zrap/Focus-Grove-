@@ -11,6 +11,8 @@ import TreeJournal from "./screen/TreeJournal";
 import Achievement from "./screen/Achievement";
 import DailyChallenges from "./screen/DailyChallenges";
 import News from "./screen/News";
+import Shop from "./screen/Shop";
+import Settings from "./screen/Settings";
 
 import DrawerNavigator from "./components/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
@@ -52,9 +54,9 @@ const App = () => {
       <Drawer.Screen name="สมุดบันทึกต้นไม้" component={TreeJournal} />
       <Drawer.Screen name="ความท้าทายประจำวัน" component={DailyChallenges} />
       <Drawer.Screen name="ความสำเร็จ" component={Achievement} />
-      <Drawer.Screen name="ร้านค้า" component={Home} />
+      <Drawer.Screen name="ร้านค้า" component={Shop} />
       <Drawer.Screen name="ข่าวสาร" component={News} />
-      <Drawer.Screen name="การตั้งค่า" component={Home} />
+      <Drawer.Screen name="การตั้งค่า" component={Settings} />
     </Drawer.Navigator>
   );
 

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import React, { useState, useMemo } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
 import TreeList from "../components/TreeList";
 
 const TreeJournal = () => {
@@ -16,43 +16,46 @@ const TreeJournal = () => {
       { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Uncommon" },
       { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Uncommon" },
     ],
-    "พิเศษ":[
-        { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
-        { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
-        { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
-        { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
-        { id: "5", name: "ต้นไม้ทั่วไป 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
-        { id: "6", name: "ต้นไม้ทั่วไป 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+    "พิเศษ": [
+      { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+      { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+      { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+      { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+      { id: "5", name: "ต้นไม้ทั่วไป 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
+      { id: "6", name: "ต้นไม้ทั่วไป 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Rare" },
     ],
-    "มหากาพย์":[
-        { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
-        { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
-        { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
-
-    ], 
-    "ตำนาน":[
-        { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-        { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-        { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-        { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-        { id: "5", name: "ต้นไม้ทั่วไป 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-        { id: "6", name: "ต้นไม้ทั่วไป 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+    "มหากาพย์": [
+      { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
+      { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
+      { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
+    ],
+    "ตำนาน": [
+      { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "5", name: "ต้นไม้ทั่วไป 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "6", name: "ต้นไม้ทั่วไป 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
     ]
   };
 
   const [selectedCategory, setSelectedCategory] = useState("ทั่วไป");
-  const [categoryProgress, setCategoryProgress] = useState(0);
 
   const calculateProgress = (category) => {
     const categoryItems = items[category];
+    if (!categoryItems || categoryItems.length === 0) {
+      return 0;
+    }
     const totalProgress = categoryItems.reduce((acc, item) => acc + item.progress, 0);
     return totalProgress / categoryItems.length;
   };
 
+  const categoryProgress = useMemo(() => {
+    return calculateProgress(selectedCategory);
+  }, [selectedCategory, items]);
+
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    const progress = calculateProgress(category);
-    setCategoryProgress(progress);
   };
 
   const renderItems = () => {
@@ -70,7 +73,6 @@ const TreeJournal = () => {
 
   return (
     <View style={styles.container}>
-      {/* ปุ่มเลือกหมวดหมู่ */}
       <View style={styles.categoryButtons}>
         {["ทั่วไป", "หายาก", "พิเศษ", "มหากาพย์", "ตำนาน"].map((category) => (
           <Button
@@ -86,12 +88,10 @@ const TreeJournal = () => {
         ))}
       </View>
 
-      {/* แสดงเปอร์เซ็นต์การปลดล็อค */}
       <Text style={styles.progressText}>
         {`การปลดล็อคของหมวดหมู่ "${selectedCategory}": ${Math.round(categoryProgress * 100)}%`}
       </Text>
 
-      {/* แสดงรายการไอเทม */}
       <View style={styles.itemList}>{renderItems()}</View>
     </View>
   );
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   selectedCategoryButton: {
-    backgroundColor: "#4CAF50", // สีเมื่อเลือกหมวดหมู่
+    backgroundColor: "#4CAF50",
   },
   progressText: {
     fontSize: 14,
