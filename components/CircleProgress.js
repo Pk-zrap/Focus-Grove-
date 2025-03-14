@@ -3,7 +3,6 @@ import { View, Text } from "react-native";
 import { ProgressChart } from "react-native-chart-kit";
 import { Svg, Defs, LinearGradient, Stop } from "react-native-svg";
 
-
 const CircleProgress = () => {
   const data = {
     data: [0.8],
@@ -13,7 +12,7 @@ const CircleProgress = () => {
     <View style={{ alignItems: "center", marginTop: 50 }}>
       <ProgressChart
         data={data}
-        width={300}  // กำหนดขนาดกว้าง
+        width={300} // กำหนดขนาดกว้าง
         height={300} // กำหนดขนาดสูง
         strokeWidth={30} // ความหนาของเส้นวงกลม
         radius={120} // รัศมีของวงกลม
