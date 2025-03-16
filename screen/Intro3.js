@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const Intro3 = () => {
-  // สร้างตัวแปร navigation ที่ใช้ในการนำทางระหว่างหน้า
   const navigation = useNavigation();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  // ฟังก์ชันที่ใช้ในการนำทางเมื่อกดปุ่ม NEXT
   const goToNext = () => {
-    // ใช้ฟังก์ชัน navigate เพื่อนำทางไปยังหน้า Intro2
     navigation.navigate("Intro4");
   };
 
-  // ฟังก์ชันสำหรับนำทางไปหน้า Home เมื่อกดปุ่ม Skip
   const goToHome = () => {
+    setShowConfirmation(true);
+  };
+
+  const confirmSkip = () => {
     navigation.navigate("DrawerNavigator");
+    setShowConfirmation(false);
+  };
+
+  const cancelSkip = () => {
+    setShowConfirmation(false);
   };
 
   return (
     <View style={styles.container}>
-      {/* ส่วนของรูปภาพ */}
       <View style={styles.imageContainer}>
         <Image
           source={require("../assets/Intro3.jpg")}
@@ -27,36 +32,53 @@ const Intro3 = () => {
         />
       </View>
 
-      {/* ส่วนของข้อความ Title */}
       <View style={styles.textContainer}>
         <Text style={styles.title}>เริ่มการโฟกัส</Text>
-        {/* แสดงข้อความ Title */}
       </View>
 
-      {/* ส่วนของข้อความ Subtitle */}
       <Text style={styles.subtitle}>
         ตั้งเวลาโฟกัสของคุณ แล้วเริ่มปลูกต้นไม้แห่งสมาธิ
       </Text>
-      {/* แสดงข้อความ Subtitle */}
 
-      {/* ส่วนของ Dot Indicators (ก่อนปุ่ม NEXT) */}
       <View style={styles.dotsContainer}>
         <View style={styles.dot} />
         <View style={styles.dot} />
         <View style={styles.dotActive} />
         <View style={styles.dot} />
       </View>
-      {/* แสดง dot indicators สำหรับแสดงตำแหน่งปัจจุบัน */}
 
-      {/* ปุ่ม NEXT */}
       <TouchableOpacity style={styles.button} onPress={goToNext}>
         <Text style={styles.buttonText}>NEXT</Text>
       </TouchableOpacity>
 
-      {/* ปุ่ม Skip */}
       <TouchableOpacity style={styles.skipButton} onPress={goToHome}>
         <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
+
+      {showConfirmation && (
+        <View style={styles.confirmationContainer}>
+          <View style={styles.confirmationBox}>
+            <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
+            <Text style={styles.confirmationMessage}>
+              แค่ 4 หน้าก็อ่านให้กันไม่ได้หรอ เสียดายแย่เลย
+            </Text>
+            <View style={styles.confirmationButtons}>
+              <TouchableOpacity
+                style={styles.confirmationButton}
+                onPress={cancelSkip}
+              >
+                <Text style={styles.confirmationButtonText}>ยกเลิก</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmationButton}
+                onPress={confirmSkip}
+              >
+                <Text style={styles.confirmationButtonText}>ยืนยัน</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -64,73 +86,114 @@ const Intro3 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 40, // ระยะห่างจากขอบของ View
-    justifyContent: "center", // จัดตำแหน่งให้เนื้อหากลางหน้าจอ
-    alignItems: "center", // จัดเนื้อหาทั้งหมดให้อยู่กลาง
+    padding: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
   imageContainer: {
-    alignItems: "center", // จัดรูปภาพให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากรูปไปยังข้อความ Title
+    alignItems: "center",
+    marginBottom: 40,
   },
   plantImage: {
-    width: 286, // กำหนดความกว้างของรูป
-    height: 292, // กำหนดความสูงของรูป
-    borderRadius: 12, // กำหนดความโค้งมนของมุม
+    width: 286,
+    height: 292,
+    borderRadius: 12,
   },
   textContainer: {
-    alignItems: "center", // จัดข้อความให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากข้อความ Title ไปยัง Subtitle
+    alignItems: "center",
+    marginBottom: 40,
   },
   title: {
-    fontSize: 24, // ขนาดตัวอักษรของ title
-    color: "#32343E", // สีของข้อความ
-    fontWeight: "bold", // ความหนาของข้อความ
+    fontSize: 24,
+    color: "#32343E",
+    fontWeight: "bold",
   },
   subtitle: {
-    fontSize: 16, // ขนาดตัวอักษรของ subtitle
-    textAlign: "center", // จัดข้อความให้อยู่กลาง
-    color: "#646982", // สีของข้อความ
-    marginBottom: 40, // ระยะห่างจาก Subtitle ไปยังปุ่ม NEXT
+    fontSize: 16,
+    textAlign: "center",
+    color: "#646982",
+    marginBottom: 40,
   },
   dotsContainer: {
-    flexDirection: "row", // จัดให้อยู่ในแนวนอน
-    marginBottom: 40, // ระยะห่างจาก dots ไปยังปุ่ม NEXT
+    flexDirection: "row",
+    marginBottom: 40,
   },
   dot: {
-    width: 10, // ขนาดของ dot
-    height: 10, // ขนาดของ dot
-    borderRadius: 10, // ขอบของ dot ให้โค้งมน
-    backgroundColor: "#9B9B9B", // สีของ dot
-    marginHorizontal: 5, // ระยะห่างระหว่าง dot
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: "#9B9B9B",
+    marginHorizontal: 5,
   },
   dotActive: {
     width: 10,
     height: 10,
     borderRadius: 10,
-    backgroundColor: "#343334", // สีของ dot ที่เป็นสถานะ active
+    backgroundColor: "#343334",
     marginHorizontal: 5,
   },
   button: {
-    backgroundColor: "#343334", // สีพื้นหลังของปุ่ม
-    paddingVertical: 15, // ระยะห่างในแนวตั้งของปุ่ม
-    paddingHorizontal: 100, // ระยะห่างในแนวนอนของปุ่ม
-    borderRadius: 12, // ขอบปุ่มให้โค้งมน
-    alignItems: "center", // จัดข้อความในปุ่มให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากปุ่ม NEXT ไปยังปุ่ม Skip
+    backgroundColor: "#343334",
+    paddingVertical: 15,
+    paddingHorizontal: 100,
+    borderRadius: 12,
+    alignItems: "center",
+    marginBottom: 40,
   },
   buttonText: {
-    color: "white", // สีข้อความในปุ่ม
-    fontWeight: "bold", // ความหนาของข้อความในปุ่ม
-    fontSize: 14, // ขนาดตัวอักษรในปุ่ม
-    fontFamily: "Sen", // ฟอนต์ที่ใช้ในปุ่ม
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
+    fontFamily: "Sen",
   },
   skipButton: {
-    alignItems: "center", // จัดข้อความในปุ่ม Skip ให้อยู่กลาง
+    alignItems: "center",
   },
   skipText: {
-    color: "#646982", // สีของข้อความในปุ่ม Skip
-    fontSize: 16, // ขนาดตัวอักษรในปุ่ม Skip
+    color: "#646982",
+    fontSize: 16,
     fontFamily: "Sen",
+  },
+  confirmationContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  confirmationBox: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+  },
+  confirmationTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  confirmationMessage: {
+    fontSize: 14,
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#9B9B9B",
+  },
+  confirmationButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  confirmationButton: {
+    backgroundColor: "#343334",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  confirmationButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
