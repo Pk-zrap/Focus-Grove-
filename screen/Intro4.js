@@ -24,9 +24,9 @@ const Intro4 = () => {
     </View>
 
     <View style={styles.textContainer}>
-      <Text style={styles.title}>เริ่มต้นการโฟกัส</Text>
+      <Text style={styles.title}>ยินดีต้อนรับสู่ Focus Grove!</Text>
       <Text style={styles.subtitle}>
-        เริ่มต้นการเดินทางแห่งการโฟกัสของคุณปลูกต้นไม้แห่งสมาธิและเติบโตไปพร้อมกัน
+        เริ่มต้นการเดินทางสู่สมาธิและความสำเร็จของคุณ
       </Text>
     </View>
 

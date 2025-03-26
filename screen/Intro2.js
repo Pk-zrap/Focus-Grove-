@@ -39,9 +39,9 @@ const Intro2 = () => {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>เริ่มต้นการโฟกัส</Text>
+        <Text style={styles.title}>เลือกเมล็ดพันธุ์</Text>
         <Text style={styles.subtitle}>
-          เริ่มต้นการเดินทางแห่งการโฟกัสของคุณปลูกต้นไม้แห่งสมาธิและเติบโตไปพร้อมกัน
+          เลือกเมล็ดพันธุ์ที่คุณชื่นชอบ เริ่มต้นการโฟกัสและเฝ้าดูการเติบโต
         </Text>
       </View>
 
