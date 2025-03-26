@@ -27,7 +27,7 @@ const Intro3 = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/Intro3-3.png")}
+          source={require("../assets/Intro3.jpg")}
           style={styles.plantImage}
         />
       </View>
@@ -60,7 +60,7 @@ const Intro3 = () => {
           <View style={styles.confirmationBox}>
             <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
             <Text style={styles.confirmationMessage}>
-              ต่อไปก็หน้าสุดท้ายแล้วนะ จะไม่อ่านจริงหรอ
+              แค่ 4 หน้าก็อ่านให้กันไม่ได้หรอ เสียดายแย่เลย
             </Text>
             <View style={styles.confirmationButtons}>
               <TouchableOpacity
@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   plantImage: {
-    width: 395,
-    height: 430,
+    width: 286,
+    height: 292,
+    borderRadius: 12,
   },
   textContainer: {
     alignItems: "center",
