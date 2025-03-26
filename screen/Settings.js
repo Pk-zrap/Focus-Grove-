@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Home = () => {
+const Settings = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>นี้คือหน้า Settings</Text>
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Settings;
