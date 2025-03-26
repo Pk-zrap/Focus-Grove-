@@ -1,17 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-  Easing,
-} from "react-native";
-import Slider from "@react-native-community/slider";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 const Home = () => {
   return (
-
+    <View style={styles.container}>
+      <Text style={styles.title}>นี้คือหน้า Shop</Text>
     </View>
   );
 };
@@ -23,44 +16,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  header: {
-    width: "100%",
-    alignItems: "flex-end",
-    marginBottom: 20,
-  },
-  coinText: {
-    fontSize: 18,
-  },
-  circle: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    borderWidth: 2,
-    borderColor: "gray",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  plantText: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  tagContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginBottom: 20,
-  },
-  tag: {
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  selectedTag: {
-    backgroundColor: "lightblue",
-  },
-  timerText: {
-    fontSize: 30,
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
   },
