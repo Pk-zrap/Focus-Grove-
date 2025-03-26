@@ -29,7 +29,11 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [fontsloaded] = useFonts({
     Sen: require("./assets/fonts/Sen-VariableFont_wght.ttf"),
+    SenSemibold: require("./assets/fonts/Sen-SemiBold.ttf"),
+    SenBold: require("./assets/fonts/Sen-Bold.ttf"),
+
     Mitr_Regular: require("./assets/fonts/Mitr-Regular.ttf"),
+    Mitr_Semibold: require("./assets/fonts/Mitr-SemiBold.ttf"),
     Mitr_Bold: require("./assets/fonts/Mitr-Bold.ttf"),
   });
 
@@ -109,7 +113,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#EFF1F5",
     justifyContent: "center",
     alignItems: "center",
+
   },
+
 });
 
 export default App;

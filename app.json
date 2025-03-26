@@ -26,7 +26,11 @@
     },
     "fonts": {
       "Sen": "./assets/fonts/Sen-VariableFont_wght.ttf",
+      "SenSemibold": "./assets/fonts/Sen-SemiBold.ttf",
+      "SenBold": "./assets/fonts/Sen-Bold.ttf",
+
       "Mitr_Regular": "./assets/fonts/Mitr-Regular.ttf",
+      "Mitr_SemiBold": "./assets/fonts/Mitr-SemiBold.ttf",
       "Mitr_Bold": "./assets/fonts/Mitr-Bold.ttf"
     }
   }

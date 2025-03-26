@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Intro4 = () => {
   // สร้างตัวแปร navigation ที่ใช้ในการนำทางระหว่างหน้า
@@ -14,105 +15,108 @@ const Intro4 = () => {
 
   return (
     <View style={styles.container}>
-      {/* ส่วนของรูปภาพ */}
-      <View style={styles.imageContainer}>
-        <Image
-          source={require("../assets/Intro4.png")}
-          style={styles.plantImage}
-        />
-      </View>
+    <View style={styles.imageContainer}>
+      <Image
+        source={require("../assets/Intro/Intro4.png")}
+        style={styles.plantImage}
+        resizeMode="contain"
+      />
+    </View>
 
-      {/* ส่วนของข้อความ Title */}
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>ยินดีต้อนรับสู่ Focus Grove!</Text>
-        {/* แสดงข้อความ Title */}
-      </View>
-
-      {/* ส่วนของข้อความ Subtitle */}
+    <View style={styles.textContainer}>
+      <Text style={styles.title}>เริ่มต้นการโฟกัส</Text>
       <Text style={styles.subtitle}>
-        เริ่มต้นการเดินทางสู่สมาธิและความสำเร็จของคุณ
+        เริ่มต้นการเดินทางแห่งการโฟกัสของคุณปลูกต้นไม้แห่งสมาธิและเติบโตไปพร้อมกัน
       </Text>
-      {/* แสดงข้อความ Subtitle */}
+    </View>
 
-      {/* ส่วนของ Dot Indicators (ก่อนปุ่ม NEXT) */}
+  <View style={styles.bottomContainer}>
       <View style={styles.dotsContainer}>
         <View style={styles.dot} />
         <View style={styles.dot} />
-        <View style={styles.dot} />
         <View style={styles.dotActive} />
+        <View style={styles.dot} />
       </View>
-      {/* แสดง dot indicators สำหรับแสดงตำแหน่งปัจจุบัน */}
 
-      {/* ปุ่ม NEXT */}
       <TouchableOpacity style={styles.button} onPress={goToNext}>
-        <Text style={styles.buttonText}>NEXT</Text>
+        <Icon name="chevron-forward-outline" size={24} color="white" />
       </TouchableOpacity>
+    </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
-    padding: 40, // ระยะห่างจากขอบของ View
-    justifyContent: "center", // จัดตำแหน่งให้เนื้อหากลางหน้าจอ
-    alignItems: "center", // จัดเนื้อหาทั้งหมดให้อยู่กลาง
+    padding: 25,
+    backgroundColor: "#E8E8E8",
   },
   imageContainer: {
-    alignItems: "center", // จัดรูปภาพให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากรูปไปยังข้อความ Title
+    alignItems: "center",
+    marginBottom: 20,
+    marginTop: 40,
+
   },
   plantImage: {
-    width: 300, // กำหนดความกว้างของรูป
-    height: 261, // กำหนดความสูงของรูป
-    borderRadius: 12, // กำหนดความโค้งมนของมุม
+    width: 395,
+    height: 395,
   },
   textContainer: {
-    alignItems: "center", // จัดข้อความให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากข้อความ Title ไปยัง Subtitle
+    alignItems: "center",
+    height: 190,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    padding: 20,
   },
   title: {
-    fontSize: 24, // ขนาดตัวอักษรของ title
-    color: "#32343E", // สีของข้อความ
-    fontWeight: "bold", // ความหนาของข้อความ
+    fontSize: 24,
+    color: "#32343E",
+    fontFamily: "Mitr_Semibold",
   },
   subtitle: {
-    fontSize: 16, // ขนาดตัวอักษรของ subtitle
-    textAlign: "center", // จัดข้อความให้อยู่กลาง
-    color: "#646982", // สีของข้อความ
-    marginBottom: 40, // ระยะห่างจาก Subtitle ไปยังปุ่ม NEXT
+    fontSize: 16,
+    textAlign: "center",
+    color: "#646982",
+    marginBottom: 40,
+    fontFamily: "Mitr_Regular",
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 2,
+    left: 40,
+    right: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   dotsContainer: {
-    flexDirection: "row", // จัดให้อยู่ในแนวนอน
-    marginBottom: 40, // ระยะห่างจาก dots ไปยังปุ่ม NEXT
+    flexDirection: "row",
+    marginBottom: 40,
   },
   dot: {
-    width: 10, // ขนาดของ dot
-    height: 10, // ขนาดของ dot
-    borderRadius: 10, // ขอบของ dot ให้โค้งมน
-    backgroundColor: "#9B9B9B", // สีของ dot
-    marginHorizontal: 5, // ระยะห่างระหว่าง dot
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: "#9B9B9B",
+    marginHorizontal: 5,
   },
   dotActive: {
     width: 10,
     height: 10,
     borderRadius: 10,
-    backgroundColor: "#343334", // สีของ dot ที่เป็นสถานะ active
+    backgroundColor: "#343334",
     marginHorizontal: 5,
   },
   button: {
-    backgroundColor: "#343334", // สีพื้นหลังของปุ่ม
-    paddingVertical: 15, // ระยะห่างในแนวตั้งของปุ่ม
-    paddingHorizontal: 100, // ระยะห่างในแนวนอนของปุ่ม
-    borderRadius: 12, // ขอบปุ่มให้โค้งมน
-    alignItems: "center", // จัดข้อความในปุ่มให้อยู่กลาง
-    marginBottom: 40, // ระยะห่างจากปุ่ม NEXT ไปยังปุ่ม Skip
-  },
-  buttonText: {
-    color: "white", // สีข้อความในปุ่ม
-    fontWeight: "bold", // ความหนาของข้อความในปุ่ม
-    fontSize: 14, // ขนาดตัวอักษรในปุ่ม
-    fontFamily: "Sen", // ฟอนต์ที่ใช้ในปุ่ม
+    backgroundColor: "#343334",
+    padding: 15,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 40,
   },
 });
 
