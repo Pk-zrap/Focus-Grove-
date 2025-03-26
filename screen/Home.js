@@ -8,6 +8,8 @@ import {
   Easing,
 } from "react-native";
 import Slider from "@react-native-community/slider";
+import React from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
 
 const Home = () => {
   const [coins, setCoins] = useState(10);
@@ -108,6 +110,7 @@ const Home = () => {
       <TouchableOpacity style={styles.startButton} onPress={startTimer}>
         <Text style={styles.startButtonText}>ปลูก</Text>
       </TouchableOpacity>
+      <Text style={styles.title}>ยินดีต้อนรับสู่หน้า Home</Text>
     </View>
   );
 };
@@ -156,6 +159,8 @@ const styles = StyleSheet.create({
   },
   timerText: {
     fontSize: 30,
+  title: {
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
   },
