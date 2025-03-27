@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet} from "react-native";
 import TimeDisplay from "../components/TimeDisplay";
 
 const Home = () => {
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#E8E8E8",
   },
- 
 });
 
 export default Home;

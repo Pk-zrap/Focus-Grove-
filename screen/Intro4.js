@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Intro4 = () => {
   // สร้างตัวแปร navigation ที่ใช้ในการนำทางระหว่างหน้า
@@ -15,40 +15,39 @@ const Intro4 = () => {
 
   return (
     <View style={styles.container}>
-    <View style={styles.imageContainer}>
-      <Image
-        source={require("../assets/Intro/Intro4.png")}
-        style={styles.plantImage}
-        resizeMode="contain"
-      />
-    </View>
-
-    <View style={styles.textContainer}>
-      <Text style={styles.title}>ยินดีต้อนรับสู่ Focus Grove!</Text>
-      <Text style={styles.subtitle}>
-        เริ่มต้นการเดินทางสู่สมาธิและความสำเร็จของคุณ
-      </Text>
-    </View>
-
-  <View style={styles.bottomContainer}>
-      <View style={styles.dotsContainer}>
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dotActive} />
-        <View style={styles.dot} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={require("../assets/Intro/Intro4.png")}
+          style={styles.plantImage}
+          resizeMode="contain"
+        />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={goToNext}>
-        <Icon name="chevron-forward-outline" size={24} color="white" />
-      </TouchableOpacity>
-    </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>ยินดีต้อนรับสู่ Focus Grove!</Text>
+        <Text style={styles.subtitle}>
+          เริ่มต้นการเดินทางสู่สมาธิและความสำเร็จของคุณ
+        </Text>
+      </View>
 
+      <View style={styles.bottomContainer}>
+        <View style={styles.dotsContainer}>
+          <View style={styles.dot} />
+          <View style={styles.dot} />
+          <View style={styles.dot} />
+          <View style={styles.dotActive} />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={goToNext}>
+          <Icon name="chevron-forward-outline" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
     padding: 25,
     backgroundColor: "#E8E8E8",
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     marginTop: 40,
-
   },
   plantImage: {
     width: 395,
