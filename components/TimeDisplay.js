@@ -36,7 +36,7 @@ const TimeDisplay = () => {
     setIsBottomSheetOpen(false);
   };
 
-  const snapPoints = useMemo(() => ["25%", "60%"], []);
+  const snapPoints = useMemo(() => ["25%", "75%"], []);
 
   useEffect(() => {
     let timer;

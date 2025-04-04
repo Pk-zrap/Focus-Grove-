@@ -30,7 +30,6 @@ const BottomSheetOptions = ({
   setSelectedTree,
   setSelectedTime,
   setSelectedTag,
-  setTimeRemaining,
   setIsPlanting,
 }) => {
   const [selectedLocalTree, setSelectedLocalTree] = useState(null);
@@ -62,14 +61,12 @@ const BottomSheetOptions = ({
       setSelectedTree(selectedLocalTree);
       setSelectedTime(selectedLocalTime);
       setSelectedTag(selectedLocalTag);
-      setIsPlanting(true);
-      setIsPlantingLocal(true);
-      setTimeRemaining(selectedLocalTime * 60);
-      setCountdown(selectedLocalTime * 60);
+      closeBottomSheet(); // ปิด Bottom Sheet หลังจากเลือกค่า
     } else {
       alert("กรุณาเลือกต้นไม้, เวลา และแท็ก ก่อนกดปุ่มปลูก");
     }
   };
+  
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
