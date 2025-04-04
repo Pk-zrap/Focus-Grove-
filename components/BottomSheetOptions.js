@@ -1,10 +1,21 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, FlatList, Dimensions } from "react-native";
 
 const treeImages = [
   require("../assets/Tree/IMG_1310 1.png"),
   require("../assets/icon.png"),
   require("../assets/favicon.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
+  require("../assets/Tree/IMG_1310 1.png"),
 ];
 
 const tagOptions = [
@@ -66,18 +77,27 @@ const BottomSheetOptions = ({
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
+  const groupTrees = [];
+  for (let i = 0; i < treeImages.length; i += 8) {
+    groupTrees.push(treeImages.slice(i, i + 8));
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>เลือกต้นไม้</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.optionRow}>
-        {treeImages.map((tree, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handleTreeSelect(tree)}
-            style={[styles.treeOption, selectedLocalTree === tree && styles.selectedOption]}
-          >
-            <Image source={tree} style={styles.treeImage} />
-          </TouchableOpacity>
+      <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
+        {groupTrees.map((group, index) => (
+          <View key={index} style={styles.treePage}>
+            {group.map((tree, i) => (
+              <TouchableOpacity
+                key={i}
+                onPress={() => handleTreeSelect(tree)}
+                style={[styles.treeOption, selectedLocalTree === tree && styles.selectedOption]}
+              >
+                <Image source={tree} style={styles.treeImage} />
+              </TouchableOpacity>
+            ))}
+          </View>
         ))}
       </ScrollView>
 
@@ -127,7 +147,21 @@ const styles = StyleSheet.create({
   container: { padding: 20 },
   title: { fontSize: 16, fontWeight: "bold", marginBottom: 10, marginTop: 20, color: "#333" },
   optionRow: { flexDirection: "row", marginBottom: 10 },
-  treeOption: { width: 80, height: 80, borderRadius: 10, backgroundColor: "#f2f2f2", alignItems: "center", justifyContent: "center", marginRight: 10 },
+  treePage: {
+    width: Dimensions.get("window").width - 40,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  treeOption: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    backgroundColor: "#f2f2f2",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
+  },
   treeImage: { width: 60, height: 60, resizeMode: "contain" },
   timeOption: { backgroundColor: "#FFFCF2", paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8, marginRight: 10 },
   optionText: { fontSize: 16, color: "#32343E" },
