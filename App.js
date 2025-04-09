@@ -12,6 +12,7 @@ import Achievement from "./screen/Achievement";
 import DailyChallenges from "./screen/DailyChallenges";
 import News from "./screen/News";
 import Shop from "./screen/Shop";
+import RealForest from "./screen/RealForest";
 import Settings from "./screen/Settings";
 
 import DrawerNavigator from "./components/DrawerNavigator";
@@ -19,6 +20,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer"; // Import Drawer
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  Ionicons,
+  FontAwesome5,
+  FontAwesome,
+  FontAwesome6,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 import { useFonts } from "expo-font";
 
@@ -53,14 +61,99 @@ const App = () => {
 
   // Drawer Navigator function
   const DrawerNavigator = () => (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="สมุดบันทึกต้นไม้" component={TreeJournal} />
-      <Drawer.Screen name="ความท้าทายประจำวัน" component={DailyChallenges} />
-      <Drawer.Screen name="ความสำเร็จ" component={Achievement} />
-      <Drawer.Screen name="ร้านค้า" component={Shop} />
-      <Drawer.Screen name="ข่าวสาร" component={News} />
-      <Drawer.Screen name="การตั้งค่า" component={Settings} />
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          backgroundColor: "#F2B501",
+          width: 270,
+        },
+        drawerActiveTintColor: "#343334",
+        drawerInactiveTintColor: "#FFFCF3",
+        drawerActiveBackgroundColor: "#FFEFC0",
+        drawerType: "front",
+        drawerLabelStyle: {
+          fontFamily: "Mitr_Regular",
+          fontSize: 16,
+        },
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: "#F2B501",
+          height: 105,
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="Home"
+        component={Home}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="สมุดบันทึกต้นไม้"
+        component={TreeJournal}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome5 name="book" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ความท้าทายประจำวัน"
+        component={DailyChallenges}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome6 name="clipboard-list" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ความสำเร็จ"
+        component={Achievement}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome name="trophy" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ร้านค้า"
+        component={Shop}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <FontAwesome5 name="shopping-bag" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ข่าวสาร"
+        component={News}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="newspaper" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="ปลูกต้นไม้ในป่า"
+        component={RealForest}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="tree"size={25} color={color} />   
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="การตั้งค่า"
+        component={Settings}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 
@@ -97,8 +190,8 @@ const App = () => {
             />
             <Stack.Screen
               name="DrawerNavigator"
-              component={DrawerNavigator} // Show Drawer Navigation in this screen
-              options={{ headerShown: false }} // Optional, depending on your UI design
+              component={DrawerNavigator}
+              options={{ headerShown: false }} 
             />
           </>
         )}
@@ -113,9 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EFF1F5",
     justifyContent: "center",
     alignItems: "center",
-
   },
-
 });
 
 export default App;
