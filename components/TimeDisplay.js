@@ -1,11 +1,13 @@
-import React, { useRef, useCallback } from "react";
+import React, { useCallback, useMemo, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,Image } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
-import BottomSheet from "@gorhom/bottom-sheet";
-import BottomSheetOptions from "./BottomSheetOptions";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 const TimeDisplay = () => {
+
+
   return (
    <View style={styles.container}>
       <View style={styles.header}>

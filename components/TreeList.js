@@ -9,6 +9,7 @@ const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked }) => {
         source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
         style={[styles.image, { opacity: isUnlocked ? 1 : 0.3 }]} 
       />
+
     </View>
   );
 };
