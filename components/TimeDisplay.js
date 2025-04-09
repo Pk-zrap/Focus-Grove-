@@ -1,62 +1,105 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useRef, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet,Image } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheetOptions from "./BottomSheetOptions";
 
 const TimeDisplay = () => {
-
-
   return (
-   <View style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headertitle}>
           <Text style={styles.headertitleText}>เริ่มต้นปลูกกันเลย</Text>
         </View>
 
-        <TouchableOpacity style={styles.editButton}>
-           <Icon name='edit' size={20} color='#FFC107' />
+        <TouchableOpacity style={styles.editButton} onPress={openBottomSheet}>
+          <Icon name="edit" size={20} color="#FFC107" />
         </TouchableOpacity>
       </View>
 
       <View style={styles.imageContainer}>
-        <Image
-          source={require("../assets/Tree/IMG_1310 1.png")}
-          style={styles.TreeImage}
-        />
+        <Image source={selectedTree} style={styles.TreeImage} />
       </View>
 
-      <View style={styles.categoryContainer}>
-        <View style={styles.categoryDot} />
-        <Text style={styles.categoryText}>การเรียน</Text>
-      </View>
-      
-      <View style={styles.timeContainer}>
-        <Text style={styles.timeText}>180 : 00</Text>
-      </View>
+      <TouchableOpacity
+        style={styles.categoryContainer}
+        onPress={openBottomSheet}
+      >
+        <View
+          style={[styles.categoryDot, { backgroundColor: selectedTag.color }]}
+        />
+        <Text style={styles.categoryText}>{selectedTag.name}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.timeContainer} onPress={openBottomSheet}>
+        <Text style={styles.timeText}>
+          {remainingTime > 0
+            ? formatTime(remainingTime)
+            : `${selectedTime} : 00`}
+        </Text>
+      </TouchableOpacity>
+
+      <Modal
+        visible={isBottomSheetOpen}
+        transparent={true}
+        animationType="fade"
+      >
+        <TouchableWithoutFeedback onPress={closeBottomSheet}>
+          <View style={styles.modalBackground}>
+            <BottomSheet
+              ref={bottomSheetRef}
+              index={1}
+              snapPoints={snapPoints}
+              enablePanDownToClose={false}
+            >
+              <BottomSheetView style={styles.bottomSheetContent}>
+                <BottomSheetOptions
+                  closeBottomSheet={closeBottomSheet}
+                  setSelectedTree={setSelectedTree}
+                  setSelectedTime={setSelectedTime}
+                  setSelectedTag={setSelectedTag}
+                  setIsPlanting={setIsCounting}
+                  // นี่คือส่วนที่เพิ่มเข้ามา: ส่ง setRemainingTime เป็น prop ชื่อ setTimeRemaining
+                  setTimeRemaining={setRemainingTime}
+                  onPlantPress={() => {
+                    handlePlant(); // เริ่มนับเวลา
+                    closeBottomSheet(); // ปิด Bottom Sheet
+                  }}
+                />
+              </BottomSheetView>
+            </BottomSheet>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
 
       <View style={styles.dotsContainer}>
         <View style={styles.dot} />
         <View style={styles.dot} />
         <View style={styles.dot} />
         <View style={styles.dot} />
-        <Image  source={require("../assets/ListT.png")}/>        
+        <Image source={require("../assets/ListT.png")} />
         <View style={styles.dot} />
         <View style={styles.dot} />
         <View style={styles.dot} />
         <View style={styles.dot} />
       </View>
 
-      <TouchableOpacity style={styles.plantButton}>
-        <Text style={styles.plantButtonText}>ปลูก</Text>
+      <TouchableOpacity
+        style={styles.plantButton}
+        onPress={handlePlant}
+        disabled={isCounting}
+      >
+        <Text style={styles.plantButtonText}>
+          {isCounting ? "กำลังปลูก..." : "ปลูก"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
     alignItems: "center",
     padding: 20,
@@ -99,7 +142,6 @@ container: {
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -116,40 +158,35 @@ container: {
     height: 30,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     backgroundColor: "#FFFCF2",
     borderRadius: 8,
     marginBottom: 20,
-
   },
   categoryDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "blue",
     marginRight: 5,
-    
   },
   categoryText: {
     fontSize: 16,
     color: "#32343E",
     fontFamily: "Mitr_Regular",
   },
-  timeContainer:{
+  timeContainer: {
     width: 320,
     height: 90,
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     backgroundColor: "#FFFCF2",
     borderRadius: 10,
     marginBottom: 30,
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 5,
-    
   },
   timeText: {
     fontSize: 50,
@@ -158,9 +195,9 @@ container: {
   },
   dotsContainer: {
     flexDirection: "row",
-    gap:10,
+    gap: 10,
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
     marginBottom: 20,
   },
   dot: {
@@ -175,7 +212,6 @@ container: {
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 10,
-
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -186,6 +222,15 @@ container: {
     fontSize: 18,
     fontFamily: "Sen",
     color: "#FFF",
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  bottomSheetContent: {
+    flex: 1,
+    backgroundColor: "white",
   },
 });
 

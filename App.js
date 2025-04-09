@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Load from "./screen/Loading";
@@ -14,11 +15,11 @@ import News from "./screen/News";
 import Shop from "./screen/Shop";
 import RealForest from "./screen/RealForest";
 import Settings from "./screen/Settings";
-
 import DrawerNavigator from "./components/DrawerNavigator";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer"; // Import Drawer
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   Ionicons,
@@ -31,7 +32,7 @@ import {
 import { useFonts } from "expo-font";
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator(); // Create Drawer Navigator
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +60,7 @@ const App = () => {
     );
   }
 
-  // Drawer Navigator function
+  // ลบฟังก์ชัน DrawerNavigator ที่ประกาศซ้ำที่นี่
   const DrawerNavigator = () => (
     <Drawer.Navigator
       screenOptions={{
@@ -158,31 +159,16 @@ const App = () => {
   );
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isLoading ? (
-          <Stack.Screen
-            name="Loading"
-            component={Load}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {isLoading ? (
             <Stack.Screen
-              name="Intro1"
-              component={Intro1}
+              name="Loading"
+              component={Load}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="Intro2"
-              component={Intro2}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Intro3"
-              component={Intro3}
-              options={{ headerShown: false }}
-            />
+<<<<<<< HEAD
             <Stack.Screen
               name="Intro4"
               component={Intro4}
@@ -197,6 +183,40 @@ const App = () => {
         )}
       </Stack.Navigator>
     </NavigationContainer>
+=======
+          ) : (
+            <>
+              <Stack.Screen
+                name="Intro1"
+                component={Intro1}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Intro2"
+                component={Intro2}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Intro3"
+                component={Intro3}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Intro4"
+                component={Intro4}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="DrawerNavigator"
+                component={DrawerNavigator} // ใช้ Component ที่ Import มา
+                options={{ headerShown: false }} // Optional, depending on your UI design
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
+>>>>>>> c5ba10b6c5293274fd3d07ccdd28931cf6ffc818
   );
 };
 
