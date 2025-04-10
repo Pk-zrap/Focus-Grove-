@@ -36,7 +36,7 @@ const TimeDisplay = () => {
     setIsBottomSheetOpen(false);
   };
 
-  const snapPoints = useMemo(() => ["25%", "80%"], []);
+  const snapPoints = useMemo(() => ["25%", "77%"], []);
 
   useEffect(() => {
     let timer;
@@ -66,13 +66,27 @@ const TimeDisplay = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headertitle}>
-          <Text style={styles.headertitleText}>เริ่มต้นปลูกกันเลย</Text>
+        <View style={styles.headerLeft}>
+          <View style={styles.headertitle}>
+            <Text style={styles.headertitleText}>เริ่มต้นปลูกกันเลย</Text>
+          </View>
         </View>
 
-        <TouchableOpacity style={styles.editButton} onPress={openBottomSheet}>
-          <Icon name="edit" size={20} color="#FFC107" />
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <View style={styles.coinContainer}>
+            <Image
+              source={require("../assets/Tree/IMG_1310 1.png")}
+              style={styles.coinImage}
+            />
+            <Text style={styles.coinText}>20</Text>
+          </View>
+          <TouchableOpacity style={styles.addButton}>
+            <Icon name="plus" size={20} color="#FFF" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.editButton} onPress={openBottomSheet}>
+            <Icon name="edit" size={20} color="#FFC107" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.imageContainer}>
@@ -165,22 +179,68 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginBottom: 50,
+    marginBottom: 30,
   },
-  headertitle: {
-    width: 200,
-    height: 30,
+  headerLeft: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  mainButton: {
+    backgroundColor: "#FFC107",
+    width: 30,
+    height: 30,
+    borderRadius: 8,
     justifyContent: "center",
-    marginBottom: 10,
+    alignItems: "center",
+    marginRight: 10,
+  },
+  mainButtonText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontFamily: "Sen",
+  },
+  headertitle: {
     backgroundColor: "#FFFCF2",
     borderRadius: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
   headertitleText: {
     fontSize: 14,
     color: "#9B9B9B",
     fontFamily: "Mitr_Regular",
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  coinContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFCF2",
+    borderRadius: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    marginRight: 10,
+  },
+  coinImage: {
+    width: 16,
+    height: 16,
+    marginRight: 5,
+  },
+  coinText: {
+    fontSize: 14,
+    color: "#32343E",
+    fontFamily: "Sen",
+  },
+  addButton: {
+    backgroundColor: "#64DD17",
+    width: 30,
+    height: 30,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
   },
   editButton: {
     backgroundColor: "#FFFCF2",
@@ -188,12 +248,12 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10,
+    borderRadius: 8,
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    borderRadius: 200,
+    width: 280, 
+    height: 280, 
+    borderRadius: 140, 
     backgroundColor: "#FFFCF2",
     justifyContent: "center",
     alignItems: "center",
@@ -205,25 +265,25 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   TreeImage: {
-    width: 250,
-    height: 250,
+    width: 230, // Adjusted size
+    height: 230, // Adjusted size
     resizeMode: "contain",
   },
   categoryContainer: {
-    width: 100,
-    height: 30,
+    width: 120, // Adjusted width
+    height: 35, // Adjusted height
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFCF2",
-    borderRadius: 8,
+    borderRadius: 10, // Adjusted border radius
     marginBottom: 20,
   },
   categoryDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginRight: 5,
+    width: 12, // Adjusted size
+    height: 12, // Adjusted size
+    borderRadius: 6, // Adjusted radius
+    marginRight: 8, // Adjusted margin
   },
   categoryText: {
     fontSize: 16,
@@ -231,12 +291,12 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
   },
   timeContainer: {
-    width: 320,
-    height: 90,
+    width: 300, // Adjusted width
+    height: 80, // Adjusted height
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFCF2",
-    borderRadius: 10,
+    borderRadius: 12, // Adjusted border radius
     marginBottom: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -245,28 +305,28 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   timeText: {
-    fontSize: 50,
+    fontSize: 45, // Adjusted font size
     fontFamily: "Sen",
     color: "#32343E",
   },
   dotsContainer: {
     flexDirection: "row",
-    gap: 10,
+    gap: 8, // Adjusted gap
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: 25, // Adjusted margin bottom
   },
   dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 8, // Adjusted size
+    height: 8, // Adjusted size
+    borderRadius: 4, // Adjusted radius
     backgroundColor: "#D0D0D0",
-    marginHorizontal: 5,
+    marginHorizontal: 4, // Adjusted horizontal margin
   },
   plantButton: {
     backgroundColor: "#FFC107",
-    paddingVertical: 15,
-    paddingHorizontal: 50,
+    paddingVertical: 12, // Adjusted padding
+    paddingHorizontal: 40, // Adjusted padding
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -287,6 +347,9 @@ const styles = StyleSheet.create({
   bottomSheetContent: {
     flex: 1,
     backgroundColor: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: "hidden",
   },
 });
 

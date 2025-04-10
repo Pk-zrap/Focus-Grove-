@@ -69,7 +69,10 @@ const BottomSheetOptions = ({
       setSelectedTree(selectedLocalTree);
       setSelectedTime(selectedLocalTime);
       setSelectedTag(selectedLocalTag);
-      closeBottomSheet(); // ปิด Bottom Sheet หลังจากเลือกค่า
+      setIsPlanting(true);
+      setIsPlantingLocal(true);
+      setCountdown(selectedLocalTime * 60);
+      closeBottomSheet();
     } else {
       alert("กรุณาเลือกต้นไม้, เวลา และแท็ก ก่อนกดปุ่มปลูก");
     }
@@ -113,15 +116,15 @@ const BottomSheetOptions = ({
       </ScrollView>
 
       <View style={styles.dotsContainer}>
-        {[...Array(Math.ceil(treeImages.length / 8))].map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.dot,
-              // You might want to add active dot styling based on scroll position
-            ]}
-          />
-        ))}
+        <View style={styles.dot} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
+        <Image source={require("../assets/ListT.png")} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
+        <View style={styles.dot} />
       </View>
 
       <Text style={styles.title}>เลือกเวลา (นาที)</Text>
@@ -164,42 +167,55 @@ const BottomSheetOptions = ({
         ))}
       </ScrollView>
 
-      <View style={styles.plantButtonContainer}>
-        <View style={styles.selectedInfo}>
+      {/* Container for the selected info and the plant button */}
+      <View style={styles.bottomSection}>
+        <View style={styles.selectedInfoContainer}>
           {selectedLocalTree && (
             <View style={styles.selectedItem}>
-              <Text style={styles.selectedLabel}>ต้นไม้:</Text>
               <Image source={selectedLocalTree} style={styles.selectedImage} />
             </View>
           )}
-          {selectedLocalTime && (
-            <View style={styles.selectedItem}>
-              <Text style={styles.selectedLabel}>เวลา:</Text>
-              <Text style={styles.selectedText}>{selectedLocalTime} นาที</Text>
-            </View>
-          )}
-          {selectedLocalTag && (
-            <View style={styles.selectedItem}>
-              <Text style={styles.selectedLabel}>แท็ก:</Text>
-              <View
-                style={[
-                  styles.selectedTag,
-                  { backgroundColor: selectedLocalTag.color },
-                ]}
-              >
-                <Text style={styles.selectedTagText}>
-                  {selectedLocalTag.name}
+          <View style={styles.timeAndTagContainer}>
+            {selectedLocalTime && (
+              <View style={styles.selectedItem}>
+                <Text style={styles.selectedLabel}> 🕑 :</Text>
+                <Text style={styles.selectedText}>
+                  {selectedLocalTime} นาที
                 </Text>
               </View>
-            </View>
-          )}
-          {!selectedLocalTree && !selectedLocalTime && !selectedLocalTag && (
-            <Text style={styles.instructionText}>
-              เลือกต้นไม้, เวลา, และแท็ก
-            </Text>
-          )}
+            )}
+            {selectedLocalTag && (
+              <View style={styles.selectedItem}>
+                <View
+                  style={[
+                    styles.selectedTag,
+                    { backgroundColor: selectedLocalTag.color },
+                  ]}
+                >
+                  <Text style={styles.selectedTagText}>
+                    {selectedLocalTag.name}
+                  </Text>
+                </View>
+              </View>
+            )}
+            {!selectedLocalTree && !selectedLocalTime && !selectedLocalTag && (
+              <Text style={styles.instructionText}>
+                เลือกต้นไม้, เวลา, และแท็ก
+              </Text>
+            )}
+          </View>
         </View>
-        <TouchableOpacity style={styles.plantButton} onPress={handlePlant}>
+        <TouchableOpacity
+          style={[
+            styles.plantButton,
+            !(selectedLocalTree && selectedLocalTime && selectedLocalTag) &&
+              styles.disabledButton, // เพิ่มสไตล์ปุ่มเมื่อยังไม่ได้เลือกทุกอย่าง
+          ]}
+          onPress={handlePlant}
+          disabled={
+            !(selectedLocalTree && selectedLocalTime && selectedLocalTag)
+          } // ปิดการใช้งานปุ่มถ้ายังไม่ได้เลือก
+        >
           <Text style={styles.plantButtonText}>ปลูก</Text>
         </TouchableOpacity>
       </View>
@@ -270,15 +286,20 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 14,
   },
-  plantButtonContainer: {
+  bottomSection: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     marginTop: 30,
+    justifyContent: "space-between",
   },
-  selectedInfo: {
-    flex: 1,
-    marginRight: 10,
+  selectedInfoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexShrink: 1, // Allow this container to shrink if needed
+  },
+  timeAndTagContainer: {
+    flexDirection: "column",
+    marginLeft: 10,
   },
   selectedItem: {
     flexDirection: "row",
@@ -296,14 +317,15 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   selectedImage: {
-    width: 25,
-    height: 25,
+    width: 40,
+    height: 40,
     resizeMode: "contain",
+    marginRight: 10,
   },
   selectedTag: {
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 30,
   },
   selectedTagText: {
     color: "white",
@@ -315,11 +337,14 @@ const styles = StyleSheet.create({
   },
   plantButton: {
     backgroundColor: "#FFD700",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  disabledButton: {
+    backgroundColor: "#cccccc",
   },
   plantButtonText: {
     color: "#32343E",
@@ -343,7 +368,6 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
     marginTop: 20,
   },
   dot: {
