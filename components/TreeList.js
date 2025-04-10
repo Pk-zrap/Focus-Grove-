@@ -4,7 +4,6 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked }) => {
   return (
     <View style={styles.container}>
-      {/* แสดงผลภาพต้นไม้ */}
       <Image
         source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
         style={[styles.image, { opacity: isUnlocked ? 1 : 0.3 }]} 
@@ -16,8 +15,8 @@ const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked }) => {
 
 const styles = StyleSheet.create({
     container: {
-      width: '30%', // จัดให้แสดง 3 บล็อกต่อแถว
-      marginBottom: 15,
+      width: '30%',
+      marginBottom: 10,
       alignItems: 'center',
       backgroundColor: '#fff',
       borderRadius: 10,

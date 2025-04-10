@@ -49,7 +49,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 5000); 
   }, []);
 
   if (!fontsloaded) {
@@ -60,7 +60,6 @@ const App = () => {
     );
   }
 
-  // ลบฟังก์ชัน DrawerNavigator ที่ประกาศซ้ำที่นี่
   const DrawerNavigator = () => (
     <Drawer.Navigator
       screenOptions={{
@@ -160,15 +159,31 @@ const App = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {isLoading ? (
+        <NavigationContainer>
+      <Stack.Navigator>
+        {isLoading ? (
+          <Stack.Screen
+            name="Loading"
+            component={Load}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
             <Stack.Screen
-              name="Loading"
-              component={Load}
+              name="Intro1"
+              component={Intro1}
               options={{ headerShown: false }}
             />
-<<<<<<< HEAD
+            <Stack.Screen
+              name="Intro2"
+              component={Intro2}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Intro3"
+              component={Intro3}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Intro4"
               component={Intro4}
@@ -182,48 +197,16 @@ const App = () => {
           </>
         )}
       </Stack.Navigator>
-    </NavigationContainer>
-=======
-          ) : (
-            <>
-              <Stack.Screen
-                name="Intro1"
-                component={Intro1}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Intro2"
-                component={Intro2}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Intro3"
-                component={Intro3}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Intro4"
-                component={Intro4}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="DrawerNavigator"
-                component={DrawerNavigator} // ใช้ Component ที่ Import มา
-                options={{ headerShown: false }} // Optional, depending on your UI design
-              />
-            </>
-          )}
-        </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
->>>>>>> c5ba10b6c5293274fd3d07ccdd28931cf6ffc818
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EFF1F5",
+    backgroundColor: "#E8E8E8",
     justifyContent: "center",
     alignItems: "center",
   },

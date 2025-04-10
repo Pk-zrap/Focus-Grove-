@@ -3,16 +3,16 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import AchievementList from "../components/AchievementList";
 
 const achievements = [
-  { name: "ปลูกเมล็ดต้นไม้แรก", progress: 0.3, image: require("../assets/TreeA.jpeg") },
-  { name: "ปลูกต้นไม้ครบ 10 ต้น", progress: 0.6, image: require("../assets/TreeA.jpeg") },
-  { name: "โฟกัสติดต่อกัน 30 นาที", progress: 1.0, image: require("../assets/Timer.jpeg") },
-  { name: "โฟกัสติดต่อกัน 1 ชั่วโมง", progress: 0.4, image: require("../assets/Timer.jpeg") },
-  { name: "โฟกัสต่อเนื่องเป็นเวลา 2 ชั่วโมง", progress: 0.5, image: require("../assets/Timer.jpeg") },
-  { name: "ใช้ไอเทมพิเศษเพื่อเพิ่มเหรียญจากการปลูก 5 ครั้ง", progress: 1.0, image: require("../assets/TreeA.jpeg") },
-  { name: "ปลูกต้นไม้ระดับ Legendary", progress: 0.7, image: require("../assets/TreeA.jpeg") },
-  { name: "โฟกัสครบ 10 ชั่วโมง", progress: 0.8, image: require("../assets/Timer.jpeg") },
-  { name: "ต้นไม้เต็มวัย", progress: 1.0, image: require("../assets/TreeA.jpeg") },
-  { name: "ปลูกต้นไม้ระดับ Legendary และโฟกัสติดต่อกัน 3 ชั่วโมง", progress: 0.4, image: require("../assets/TreeA.jpeg") },
+  { name: "ปลูกเมล็ดต้นไม้แรก", current: 0, total: 1, image: require("../assets/TreeA.jpeg") },
+  { name: "ปลูกต้นไม้ครบ 10 ต้น", current: 6, total: 10, image: require("../assets/TreeA.jpeg") },
+  { name: "โฟกัสติดต่อกัน 30 นาที", current: 1, total: 1, image: require("../assets/Timer.jpeg") },
+  { name: "โฟกัสติดต่อกัน 1 ชั่วโมง", current: 0, total: 1, image: require("../assets/Timer.jpeg") },
+  { name: "โฟกัสต่อเนื่องเป็นเวลา 2 ชั่วโมง", current: 1, total: 2, image: require("../assets/Timer.jpeg") },
+  { name: "ใช้ไอเทมพิเศษเพื่อเพิ่มเหรียญจากการปลูก 5 ครั้ง", current: 5, total: 5, image: require("../assets/TreeA.jpeg") },
+  { name: "ปลูกต้นไม้ระดับ Legendary", current: 0, total: 1, image: require("../assets/TreeA.jpeg") },
+  { name: "โฟกัสครบ 10 ชั่วโมง", current: 8, total: 10, image: require("../assets/Timer.jpeg") },
+  { name: "ต้นไม้เต็มวัย", current: 1, total: 1, image: require("../assets/TreeA.jpeg") },
+  { name: "ปลูกต้นไม้ระดับ Legendary และโฟกัสติดต่อกัน 3 ชั่วโมง", current: 3, total: 3, image: require("../assets/TreeA.jpeg") },
 ];
 
 const Achievement = () => {
@@ -23,7 +23,8 @@ const Achievement = () => {
           <AchievementList 
             key={index}
             achievementName={achieve.name}
-            progress={achieve.progress}
+            current={achieve.current}
+            total={achieve.total}
             imageUrl={achieve.image}
           />
         ))}
@@ -35,7 +36,8 @@ const Achievement = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 20,
+    backgroundColor: "#E8E8E8",
   },
   scrollContainer: {
     alignItems: "center",

@@ -5,7 +5,6 @@ import TimeDisplay from "../components/TimeDisplay";
 const Home = () => {
   return (
     <View style={styles.container}>
-      <TimeDisplay></TimeDisplay>
     </View>
   );
 };

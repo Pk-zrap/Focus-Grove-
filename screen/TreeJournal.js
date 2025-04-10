@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity } from "react-native";
 import TreeList from "../components/TreeList";
+import { ScrollView } from "react-native";
+
 
 const TreeJournal = () => {
   const items = {
@@ -30,12 +32,24 @@ const TreeJournal = () => {
       { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Epic" },
     ],
     "ตำนาน": [
-      { id: "1", name: "ต้นไม้หายาก 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-      { id: "2", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-      { id: "3", name: "ต้นไม้หายาก 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-      { id: "4", name: "ต้นไม้ทั่วไป 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-      { id: "5", name: "ต้นไม้ทั่วไป 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
-      { id: "6", name: "ต้นไม้ทั่วไป 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "1", name: "ต้นไม้ตำนาน 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "2", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "3", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "4", name: "ต้นไม้ตำนาน 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "5", name: "ต้นไม้ตำนาน 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "6", name: "ต้นไม้ตำนาน 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "7", name: "ต้นไม้ตำนาน 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "8", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "9", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "10", name: "ต้นไม้ตำนาน 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "11", name: "ต้นไม้ตำนาน 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "12", name: "ต้นไม้ตำนาน 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "13", name: "ต้นไม้ตำนาน 1", progress: 0.4, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "14", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "15", name: "ต้นไม้ตำนาน 2", progress: 0.7, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "16", name: "ต้นไม้ตำนาน 1", progress: 0.6, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "17", name: "ต้นไม้ตำนาน 2", progress: 0.3, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
+      { id: "18", name: "ต้นไม้ตำนาน 3", progress: 0.8, imageUrl: require("../assets/TreeA.jpeg"), rank: "Legendary" },
     ]
   };
 
@@ -73,27 +87,33 @@ const TreeJournal = () => {
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       <View style={styles.categoryButtons}>
-        {["ทั่วไป", "หายาก", "พิเศษ", "มหากาพย์", "ตำนาน"].map((category) => (
-          <Button
-            key={category}
-            title={category}
-            onPress={() => handleCategorySelect(category)}
-            color={selectedCategory === category ? "#4CAF50" : "#2196F3"}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.selectedCategoryButton,
-            ]}
-          />
-        ))}
+        {["ทั่วไป", "หายาก", "พิเศษ", "มหากาพย์", "ตำนาน"].map((category) => {
+          const isSelected = selectedCategory === category;
+          return (
+            <TouchableOpacity
+              key={category}
+              onPress={() => handleCategorySelect(category)}
+              style={[styles.categoryButton, isSelected && styles.selectedButton]}
+            >
+              <Text style={[styles.categoryText, isSelected && styles.selectedText]}>
+                {category}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       <Text style={styles.progressText}>
-        {`การปลดล็อคของหมวดหมู่ "${selectedCategory}": ${Math.round(categoryProgress * 100)}%`}
+        {`ปลดล็อคแล้ว ${Math.round(categoryProgress * 100)}%`}
       </Text>
 
       <View style={styles.itemList}>{renderItems()}</View>
+      </ScrollView>
+
     </View>
+
   );
 };
 
@@ -101,22 +121,44 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#E8E8E8",
+
   },
   categoryButtons: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    
   },
   categoryButton: {
-    width: "18%",
-    borderRadius: 25,
-    marginHorizontal: 5,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    backgroundColor: "#C3C6CF",
+    borderRadius: 10,
+    marginHorizontal: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2, 
   },
-  selectedCategoryButton: {
-    backgroundColor: "#4CAF50",
+  selectedButton: {
+    backgroundColor: "#FFFCF3",
   },
+  categoryText: {
+    fontFamily: "Mitr_Regular",
+    fontSize: 14,
+    color: "#FFFCF3",
+  },
+  selectedText: {
+    color: "#343334",
+  },
+  
   progressText: {
+    color: "#9B9B9B",
+    fontFamily: "Mitr_Regular",
     fontSize: 14,
     marginBottom: 10,
     textAlign: "center",
