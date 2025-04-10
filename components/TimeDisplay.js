@@ -1,11 +1,68 @@
-import React, { useRef, useCallback } from "react";
-import { View, Text, TouchableOpacity, StyleSheet,Image } from "react-native";
-import Icon from 'react-native-vector-icons/Feather';
-
-import BottomSheet from "@gorhom/bottom-sheet";
+import React, { useRef, useMemo, useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import BottomSheetOptions from "./BottomSheetOptions";
 
 const TimeDisplay = () => {
+  const bottomSheetRef = useRef(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  const [selectedTree, setSelectedTree] = useState(
+    require("../assets/Tree/IMG_1310 1.png")
+  );
+  const [selectedTime, setSelectedTime] = useState(180);
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [selectedTag, setSelectedTag] = useState({
+    name: "การเรียน",
+    color: "blue",
+  });
+
+  const [isCounting, setIsCounting] = useState(false);
+
+  const openBottomSheet = () => {
+    setIsBottomSheetOpen(true);
+  };
+
+  const closeBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
+  const snapPoints = useMemo(() => ["25%", "80%"], []);
+
+  useEffect(() => {
+    let timer;
+    if (isCounting && remainingTime > 0) {
+      timer = setTimeout(() => {
+        setRemainingTime((prev) => prev - 1);
+      }, 1000);
+    } else if (isCounting && remainingTime === 0) {
+      setIsCounting(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isCounting, remainingTime]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
+    return `${mins} : ${secs}`;
+  };
+
+  const handlePlant = () => {
+    setRemainingTime(selectedTime * 60);
+    setIsCounting(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -60,11 +117,10 @@ const TimeDisplay = () => {
                   setSelectedTime={setSelectedTime}
                   setSelectedTag={setSelectedTag}
                   setIsPlanting={setIsCounting}
-                  // นี่คือส่วนที่เพิ่มเข้ามา: ส่ง setRemainingTime เป็น prop ชื่อ setTimeRemaining
                   setTimeRemaining={setRemainingTime}
                   onPlantPress={() => {
-                    handlePlant(); // เริ่มนับเวลา
-                    closeBottomSheet(); // ปิด Bottom Sheet
+                    handlePlant();
+                    closeBottomSheet();
                   }}
                 />
               </BottomSheetView>
