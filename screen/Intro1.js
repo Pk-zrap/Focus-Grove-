@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/Ionicons';
-
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Intro1 = () => {
   const navigation = useNavigation();
@@ -65,7 +64,7 @@ const Intro1 = () => {
             <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
             <View style={styles.confirmationBoxMessage}>
               <Text style={styles.confirmationMessage}>
-                แค่ 4 หน้าก็อ่านให้กันไม่ได้หรอ เสียดายแย่เลย
+                เอ้าา แค่ 4 หน้าจะรีบไปไหน~
               </Text>
             </View>
 
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    backgroundColor: "#E8E8E8" ,
+    backgroundColor: "#E8E8E8",
   },
   imageContainer: {
     alignItems: "center",
@@ -106,10 +105,10 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    height: 190, 
+    height: 190,
     alignItems: "center",
-    justifyContent: "center", 
-    gap:10,
+    justifyContent: "center",
+    gap: 10,
     padding: 20,
   },
   title: {
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
   },
   bottomContainer: {
-    position: "absolute", 
+    position: "absolute",
     bottom: 2,
     left: 40,
     right: 40,
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     alignItems: "flex-end", // Align to the right
-    width: '100%',
+    width: "100%",
     marginBottom: 20,
   },
   skipText: {
@@ -207,7 +206,6 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
     textAlign: "center",
     color: "#9B9B9B",
-
   },
   confirmationButtons: {
     flexDirection: "row",
@@ -219,10 +217,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 8,
   },
-  confirmationButtonCancel:{
+  confirmationButtonCancel: {
     borderWidth: 1,
     borderColor: "#9B9B9B",
-    borderRadius: 18,    paddingVertical: 10,
+    borderRadius: 18,
+    paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 8,
   },

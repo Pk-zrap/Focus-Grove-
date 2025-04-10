@@ -64,7 +64,7 @@ const Intro3 = () => {
            <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
            <View style={styles.confirmationBoxMessage}>            
              <Text style={styles.confirmationMessage}>
-                 แค่ 4 หน้าก็อ่านให้กันไม่ได้หรอ เสียดายแย่เลย
+                 มาขนาดนี้แล้ว อ่านต่อเถอะ~
                </Text>
            </View>
  
