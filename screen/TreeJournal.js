@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, StyleSheet,TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity,Modal,Image } from "react-native";
 import TreeList from "../components/TreeList";
 import { ScrollView } from "react-native";
 
@@ -54,22 +54,25 @@ const TreeJournal = () => {
   };
 
   const [selectedCategory, setSelectedCategory] = useState("ทั่วไป");
+  const [selectedTree, setSelectedTree] = useState(null); 
+  const [modalVisible, setModalVisible] = useState(false);
 
   const calculateProgress = (category) => {
     const categoryItems = items[category];
-    if (!categoryItems || categoryItems.length === 0) {
-      return 0;
-    }
+    if (!categoryItems || categoryItems.length === 0) return 0;
     const totalProgress = categoryItems.reduce((acc, item) => acc + item.progress, 0);
     return totalProgress / categoryItems.length;
   };
 
   const categoryProgress = useMemo(() => {
     return calculateProgress(selectedCategory);
-  }, [selectedCategory, items]);
+  }, [selectedCategory]);
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+  const handleCategorySelect = (category) => setSelectedCategory(category);
+
+  const handleTreePress = (tree) => {
+    setSelectedTree(tree);
+    setModalVisible(true);
   };
 
   const renderItems = () => {
@@ -81,13 +84,14 @@ const TreeJournal = () => {
         treeName={item.name}
         treeRank={item.rank}
         isUnlocked={item.progress > 0}
+        onPress={() => handleTreePress(item)} 
       />
     ));
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+    <ScrollView>
       <View style={styles.categoryButtons}>
         {["ทั่วไป", "หายาก", "พิเศษ", "มหากาพย์", "ตำนาน"].map((category) => {
           const isSelected = selectedCategory === category;
@@ -110,10 +114,36 @@ const TreeJournal = () => {
       </Text>
 
       <View style={styles.itemList}>{renderItems()}</View>
-      </ScrollView>
+    </ScrollView>
 
-    </View>
+    {/* Modal แสดงรายละเอียดต้นไม้ */}
+    <Modal
+      visible={modalVisible}
+      transparent
+      animationType="slide"
+      onRequestClose={() => setModalVisible(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          {selectedTree && (
+            <>
+              <Image source={selectedTree.imageUrl} style={styles.modalImage} />
+              <Text style={styles.modalTitle}>{selectedTree.name}</Text>
+              <Text>ระดับ: {selectedTree.rank}</Text>
+              <Text>ความคืบหน้า: {Math.round(selectedTree.progress * 100)}%</Text>
 
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                style={styles.closeButton}
+              >
+                <Text style={{ color: "#fff" }}>ปิด</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      </View>
+    </Modal>
+  </View>
   );
 };
 
@@ -168,6 +198,38 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginTop: 10,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  closeButton: {
+    marginTop: 15,
+    backgroundColor: "#343334",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
   },
 });
 
