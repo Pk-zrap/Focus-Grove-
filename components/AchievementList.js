@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Animated, Modal } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Animated,
+  Modal,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-const AchievementList = ({ achievementName, current, total, imageUrl }) => {
+const AchievementList = ({
+  achievementName,
+  current,
+  total,
+  imageUrl,
+  rewards,
+}) => {
   const progress = current / total;
   const [currentProgress] = useState(new Animated.Value(progress * 100));
   const [isCompleted, setIsCompleted] = useState(false);
   const [isGetItem, setGetItem] = useState(false);
+  const [hasClaimed, setHasClaimed] = useState(false);
 
   // เมื่อ progress เปลี่ยนแปลง
   useEffect(() => {
@@ -29,6 +44,11 @@ const AchievementList = ({ achievementName, current, total, imageUrl }) => {
     }
   };
 
+  const handleConfirm = () => {
+    setHasClaimed(true);
+    setGetItem(false); // ปิด popup
+  };
+
   return (
     <View style={styles.container}>
       {/* Achievement Image */}
@@ -42,57 +62,103 @@ const AchievementList = ({ achievementName, current, total, imageUrl }) => {
       {/* Text & Progress Bar */}
       <View style={styles.textContainer}>
         <Text style={styles.achievementName}>{achievementName}</Text>
-          <View style={styles.progressBar}>
-            <Animated.View
-              style={[
-                styles.progressFill,
-                { width: currentProgress.interpolate({ inputRange: [0, 100], outputRange: ["0%", "100%"] }) },
-              ]}
-            />
-          </View>
-        <Text style={styles.progressText}>{current}/{total}</Text>
+        <View style={styles.progressBar}>
+          <Animated.View
+            style={[
+              styles.progressFill,
+              {
+                width: currentProgress.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ["0%", "100%"],
+                }),
+              },
+            ]}
+          />
+        </View>
+        <Text style={styles.progressText}>
+          {current}/{total}
+        </Text>
       </View>
 
       {/* Achievement Button */}
       <TouchableOpacity
-        disabled={!isCompleted}
+        disabled={!isCompleted || hasClaimed}
         style={[
           styles.rightButton,
-          isCompleted ? styles.completedButton : styles.disabledButton,
+          hasClaimed
+            ? styles.claimedButton
+            : isCompleted
+            ? styles.completedButton
+            : styles.disabledButton,
         ]}
         onPress={handleButtonPress}
       >
-        {isCompleted ? (
+        {hasClaimed ? (
+          <Ionicons name="checkmark-circle" size={24} color="#fff" />
+        ) : isCompleted ? (
           <Ionicons name="trophy" size={24} color="#fff" />
         ) : (
           <Ionicons name="trophy-outline" size={24} color="#FEC828" />
         )}
       </TouchableOpacity>
 
-      {/* GetItem */}
+      {/* Modal for item received */}
       <Modal
-        animationType="fade"
+        visible={isGetItem}
         transparent={true}
-        visible={isGetItem} // เปลี่ยนจาก isModalVisible เป็น isGetItem
-        onRequestClose={() => setGetItem(false)} // ปิด Modal เมื่อกดออก
+        animationType="fade"
+        onRequestClose={() => setGetItem(false)}
       >
+        {/* ปุ่ม X */}
+        <View style={styles.closeButton}>
+          <TouchableOpacity
+            style={styles.closeButtonS}
+            onPress={() => setGetItem(false)}
+          >
+            <Ionicons name="close" size={28} color="#fff" />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>คุณได้รับไอเทมแล้ว!</Text>
-            <Image
-              source={require("../assets/Exchange.jpeg")}
-              style={styles.coinImage}
-            />
+            <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
+            <View style={{ alignItems: "center", width: "100%" }}>
+              
+            {/* Reward Images */}
+            <View style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", marginBottom: 5 }}>
+              {rewards.map((reward, index) => (
+                <View key={index} style={{ alignItems: "center", marginHorizontal: 10 }}>
+                  {reward.image && (
+                    <Image
+                      source={typeof reward.image === "string" ? { uri: reward.image } : reward.image}
+                      style={styles.coinImage}
+                    />
+                  )}
+                </View>
+              ))}
+            </View>
+
+             {/* Reward Names */}
+            <View style={{ marginTop: 10 }}>
+              {rewards.map((reward, index) => (
+                <Text key={index} style={styles.rewardText}>
+                  {reward.type === "coin"
+                    ? `${reward.amount} Nature Coins`
+                    : `${reward.name} ${reward.amount} ชิ้น`}
+                </Text>
+              ))}
+            </View>
+          </View>
+
             <TouchableOpacity
               style={styles.modalButton}
-              onPress={() => setGetItem(false)} // ปิด
+              onPress={handleConfirm}
             >
               <Text style={styles.modalButtonText}>ตกลง</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-
     </View>
   );
 };
@@ -156,7 +222,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   completedButton: {
-    backgroundColor: "#FEC828", 
+    backgroundColor: "#FEC828",
     borderColor: "#FEC828",
   },
   disabledButton: {
@@ -165,60 +231,87 @@ const styles = StyleSheet.create({
   },
 
   // Modal Styles
-modalContainer: {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.6)", // Slightly darker overlay for better contrast
-},
-modalContent: {
-  width: "70%",
-  padding: 25,
-  backgroundColor: "#fff",
-  borderRadius: 20,
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.1,
-  shadowRadius: 15,
-  elevation: 10, 
-},
-modalText: {
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+  },
+  modalContent: {
+    width: "70%",
+    padding: 25,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 10,
+  },
+  modalText: {
     fontFamily: "Mitr_Regular",
-  fontSize: 16,
-  color: "#333",
-  marginBottom: 15,
-},
-modalButton: {
-  paddingVertical: 12,
-  paddingHorizontal: 30,
-  backgroundColor: "#FEC828",
-  borderRadius: 30,
-  borderWidth: 1,
-  borderColor: "#FEC828",
-  alignItems: "center",
-  justifyContent: "center",
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.15,
-  shadowRadius: 10,
-  elevation: 5,
-},
-modalButtonText: {
-  fontSize: 16,
-  color: "#fff",
-  fontWeight: "500",
-  fontFamily: "Mitr_Regular",
-},
-coinImage: {
-  width: 90,
-  height: 90,
-  borderRadius: 20,
-  marginBottom: 20,
-  borderWidth: 2,
-  borderColor: "#D9D9D9",
-},
+    fontSize: 16,
+    color: "#343334",
+    marginBottom: 15,
+  },
+  modalButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    backgroundColor: "#FEC828",
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: "#FEC828",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 5,
+    marginTop: 10,
+  },
+  modalButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "500",
+    fontFamily: "Mitr_Regular",
+  },
+  claimedButton: {
+    backgroundColor: "#9B9B9B",
+    borderColor: "#D3D9E3",
+    opacity: 0.7,
+    borderRadius: 8,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 250,
+    right: 30,
+    zIndex: 10,
+    padding: 8,
+  },
+  closeButtonS: {
+    backgroundColor: "#FEC828",
+    borderRadius: 50,
+    padding: 5,
+  },
+  coinImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 20,
+    marginBottom: 20,
+    borderWidth: 2,
+    borderColor: "#D9D9D9",
+    marginBottom: 5,
 
+  },
+  rewardText: {
+    fontFamily: "Mitr_Regular",
+    fontSize: 14,
+    color: "#343434",
+    marginBottom: 5,
+    textAlign: "center",
+  },
 });
 
 export default AchievementList;
