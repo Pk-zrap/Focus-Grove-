@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Intro3 = () => {
   const navigation = useNavigation();
@@ -26,65 +26,65 @@ const Intro3 = () => {
 
   return (
     <View style={styles.container}>
-          <TouchableOpacity style={styles.skipButton} onPress={goToHome}>
-      <Text style={styles.skipText}>Skip</Text>
-    </TouchableOpacity>
-    
-    <View style={styles.imageContainer}>
-      <Image
-        source={require("../assets/Intro/Intro3.png")}
-        style={styles.plantImage}
-        resizeMode="contain"
-      />
-    </View>
+      <TouchableOpacity style={styles.skipButton} onPress={goToHome}>
+        <Text style={styles.skipText}>Skip</Text>
+      </TouchableOpacity>
 
-    <View style={styles.textContainer}>
-      <Text style={styles.title}>เริ่มการโฟกัส</Text>
-      <Text style={styles.subtitle}>
-        ตั้งเวลาโฟกัสของคุณ แล้วเริ่มปลูกต้นไม้แห่งสมาธิ
-      </Text>
-    </View>
-
-  <View style={styles.bottomContainer}>
-      <View style={styles.dotsContainer}>
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dotActive} />
-        <View style={styles.dot} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={require("../assets/Intro/Intro3.png")}
+          style={styles.plantImage}
+          resizeMode="contain"
+        />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={goToNext}>
-        <Icon name="chevron-forward-outline" size={24} color="white" />
-      </TouchableOpacity>
-    </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>เริ่มการโฟกัส</Text>
+        <Text style={styles.subtitle}>
+          ตั้งเวลาโฟกัสของคุณ แล้วเริ่มปลูกต้นไม้แห่งสมาธิ
+        </Text>
+      </View>
 
-       {showConfirmation && (
-       <View style={styles.confirmationContainer}>
-         <View style={styles.confirmationBox}>
-           <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
-           <View style={styles.confirmationBoxMessage}>            
-             <Text style={styles.confirmationMessage}>
-                 มาขนาดนี้แล้ว อ่านต่อเถอะ~
-               </Text>
-           </View>
- 
-           <View style={styles.confirmationButtons}>
-             <TouchableOpacity
-               style={styles.confirmationButtonCancel}
-               onPress={cancelSkip}
-             >
-               <Text style={styles.confirmationButtonText}>ยกเลิก</Text>
-             </TouchableOpacity>
-             <TouchableOpacity
-               style={styles.confirmationButton}
-               onPress={confirmSkip}
-             >
-               <Text style={styles.confirmationButtonText}>ยืนยัน</Text>
-             </TouchableOpacity>
-           </View>
-         </View>
-       </View>
-       )}
+      <View style={styles.bottomContainer}>
+        <View style={styles.dotsContainer}>
+          <View style={styles.dot} />
+          <View style={styles.dot} />
+          <View style={styles.dotActive} />
+          <View style={styles.dot} />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={goToNext}>
+          <Icon name="chevron-forward-outline" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+
+      {showConfirmation && (
+        <View style={styles.confirmationContainer}>
+          <View style={styles.confirmationBox}>
+            <Text style={styles.confirmationTitle}>คำแนะนำ</Text>
+            <View style={styles.confirmationBoxMessage}>
+              <Text style={styles.confirmationMessage}>
+                มาขนาดนี้แล้ว อ่านต่อเถอะ~
+              </Text>
+            </View>
+
+            <View style={styles.confirmationButtons}>
+              <TouchableOpacity
+                style={styles.confirmationButtonCancel}
+                onPress={cancelSkip}
+              >
+                <Text style={styles.confirmationButtonText}>ยกเลิก</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmationButton}
+                onPress={confirmSkip}
+              >
+                <Text style={styles.confirmationButtonText}>ยืนยัน</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    backgroundColor: "#E8E8E8" ,
+    backgroundColor: "#E8E8E8",
   },
   imageContainer: {
     alignItems: "center",
@@ -105,10 +105,10 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    height: 190, 
+    height: 190,
     alignItems: "center",
-    justifyContent: "center", 
-    gap:10,
+    justifyContent: "center",
+    gap: 10,
     padding: 20,
   },
   title: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
   },
   bottomContainer: {
-    position: "absolute", 
+    position: "absolute",
     bottom: 2,
     left: 40,
     right: 40,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     alignItems: "flex-end", // Align to the right
-    width: '100%',
+    width: "100%",
     marginBottom: 20,
   },
   skipText: {
@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
     textAlign: "center",
     color: "#9B9B9B",
-
   },
   confirmationButtons: {
     flexDirection: "row",
@@ -218,10 +217,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 8,
   },
-  confirmationButtonCancel:{
+  confirmationButtonCancel: {
     borderWidth: 1,
     borderColor: "#9B9B9B",
-    borderRadius: 18,    paddingVertical: 10,
+    borderRadius: 18,
+    paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 8,
   },
