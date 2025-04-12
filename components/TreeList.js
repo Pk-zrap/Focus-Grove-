@@ -8,7 +8,7 @@ import {
   Animated,
 } from 'react-native';
 
-const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked, onPress }) => {
+const TreeList = ({ imageUrl, isUnlocked, onPress }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -21,8 +21,6 @@ const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked, onPress }) => {
   const handlePressOut = () => {
     Animated.spring(scaleAnim, {
       toValue: 1,
-      friction: 3,
-      tension: 40,
       useNativeDriver: true,
     }).start();
   };
@@ -35,10 +33,10 @@ const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked, onPress }) => {
     >
       <Animated.View style={[styles.touchArea, { transform: [{ scale: scaleAnim }] }]}>
         <View style={styles.container}>
-          <Image
-            source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
-            style={[styles.image, { opacity: isUnlocked ? 1 : 0.3 }]}
-          />
+        <Image
+          source={imageUrl}
+          style={[styles.image, !isUnlocked && styles.lockedImage]}
+        />
         </View>
       </Animated.View>
     </TouchableWithoutFeedback>
@@ -48,39 +46,29 @@ const TreeList = ({ imageUrl, treeName, treeRank, isUnlocked, onPress }) => {
 const styles = StyleSheet.create({
   touchArea: {
     width: '30%',
-    marginBottom: 15,
+    marginBottom: 10,
+    marginHorizontal: 1,
+    alignItems: 'center',
   },
   container: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
+    padding: 3,
+    borderRadius: 18,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
+    shadowRadius: 3,
+    elevation: 2, 
   },
   image: {
     width: 100,
     height: 100,
-    resizeMode: 'contain',
-    marginBottom: 8,
-    borderRadius: 10,
+    borderRadius: 18,
+    marginBottom: 1,
   },
-  treeName: {
-    fontSize: 12,
-    fontFamily: 'Mitr_Regular',
-    color: '#333',
-    textAlign: 'center',
-  },
-  treeRank: {
-    fontSize: 11,
-    fontFamily: 'Mitr_Regular',
-    color: '#999',
-    textAlign: 'center',
+  lockedImage: {
+    opacity: 0.3,
   },
 });
 

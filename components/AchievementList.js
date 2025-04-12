@@ -115,7 +115,7 @@ const AchievementList = ({
             style={styles.closeButtonS}
             onPress={() => setGetItem(false)}
           >
-            <Ionicons name="close" size={28} color="#fff" />
+            <Ionicons name="close" size={28} color="#F2B501" />
           </TouchableOpacity>
         </View>
 
@@ -140,13 +140,31 @@ const AchievementList = ({
 
              {/* Reward Names */}
             <View style={{ marginTop: 10 }}>
-              {rewards.map((reward, index) => (
+            {rewards.map((reward, index) => {
+              let symbol = "🎁"; // default symbol
+              switch (reward.type) {
+                case "coin":
+                  symbol = "🪙";
+                  break;
+                case "seed":
+                  symbol = "🌱";
+                  break;
+                case "box":
+                  symbol = "🎁";
+                  break;
+                default:
+                  symbol = "🎉";
+              }
+
+              return (
                 <Text key={index} style={styles.rewardText}>
-                  {reward.type === "coin"
-                    ? `${reward.amount} Nature Coins`
-                    : `${reward.name} ${reward.amount} ชิ้น`}
+                {reward.name
+                  ? `${symbol} ${reward.name} x ${reward.amount}`
+                  : `${symbol} x ${reward.amount}`}
                 </Text>
-              ))}
+              );
+            })}
+
             </View>
           </View>
 
@@ -291,7 +309,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   closeButtonS: {
-    backgroundColor: "#FEC828",
+    backgroundColor: "#5D4940",
     borderRadius: 50,
     padding: 5,
   },
