@@ -3,7 +3,7 @@
 ## Overview of the App:
 Focus Grove is an app designed to help users improve their focus through planting trees. Each feature in the app encourages better concentration and adds fun during meditation practice, offering various systems and rewards.
 
-## Game System Overview:
+## System Overview:
 
 - **Focus System**:
     - **Progress Tracking** 📊🌱: Players can track growth progress (e.g., a tree growing over time with beautiful visuals).
@@ -18,8 +18,10 @@ Focus Grove is an app designed to help users improve their focus through plantin
 - **Rewards/Bonuses**:
     - **Achievements** 🏆📈: Players earn rewards based on milestones.
   
-- **Daily Login System**:
-    - **Login Rewards** 📅: After 7 consecutive logins, players receive a random tree seed box.
+- **Daily Challenges**:
+    - **Events Challenges**: After completing 15 daily events, players will receive a tree for that time of the month.
+    - **Daily Event**: Daily Event After completing daily missions, players will receive rewards according to that mission.
+    - **Login Rewards** 📅: After logging in 3 times in a row within 3 hours, players will receive login rewards each time.
   
 - **Tags**:
     - **Tag Selection**: Categories for focus (Work, Study, Social, Relax, Entertainment, Sports, Other).
