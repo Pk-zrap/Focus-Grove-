@@ -65,7 +65,7 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#E8E8E8",
   },
   title: {
     fontSize: 26,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
     marginBottom: 10,
     color: "#444",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   optionText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#333",
   },
   switchRow: {
