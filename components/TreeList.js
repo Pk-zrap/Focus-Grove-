@@ -25,6 +25,12 @@ const TreeList = ({ imageUrl, isUnlocked, onPress }) => {
     }).start();
   };
 
+  // ตรวจสอบว่า imageUrl เป็น string หรือไม่
+  const imageSource = typeof imageUrl === 'string'
+  ? { uri: imageUrl }
+  : imageUrl;
+
+
   return (
     <TouchableWithoutFeedback
       onPressIn={handlePressIn}
@@ -34,9 +40,9 @@ const TreeList = ({ imageUrl, isUnlocked, onPress }) => {
       <Animated.View style={[styles.touchArea, { transform: [{ scale: scaleAnim }] }]}>
         <View style={styles.container}>
         <Image
-          source={imageUrl}
-          style={[styles.image, !isUnlocked && styles.lockedImage]}
-        />
+            source={imageSource}
+            style={[styles.image, !isUnlocked && styles.lockedImage]}
+          />
         </View>
       </Animated.View>
     </TouchableWithoutFeedback>
