@@ -56,9 +56,7 @@ const Achievement = () => {
             current={achieve.current}
             total={achieve.total}
             imageUrl={achieve.image}
-            coinAmount={achieve.coinAmount} 
-            rewards={achieve.rewards} 
-
+            rewards={achieve.rewards}
           />
         ))}
       </ScrollView>
@@ -68,7 +66,6 @@ const Achievement = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
     backgroundColor: "#E8E8E8",
   },

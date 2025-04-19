@@ -182,6 +182,7 @@ const AchievementList = ({
 };
 
 const styles = StyleSheet.create({
+  // Achievement Container styles
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Transparent overlay
   },
   modalContent: {
     width: "70%",
@@ -303,15 +304,19 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 250,
-    right: 30,
-    zIndex: 10,
-    padding: 8,
+    top: 260,
+    right: 40,
+    zIndex: 2,
   },
   closeButtonS: {
-    backgroundColor: "#5D4940",
-    borderRadius: 50,
+    backgroundColor: "#fff",
+    borderRadius: 20,
     padding: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 6,
   },
   coinImage: {
     width: 90,
@@ -321,7 +326,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#D9D9D9",
     marginBottom: 5,
-
   },
   rewardText: {
     fontFamily: "Mitr_Regular",

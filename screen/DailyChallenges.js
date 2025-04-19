@@ -1,55 +1,132 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+
 import DailyLogin from "../components/DailyLogin";
 import DailyChallengesList from "../components/DailyChallengesList";
 
 const DailyChallenges = () => {
+  const dailyChallenges = [
+    {
+      id: 1,
+      challengeName: "ปลูกต้นไม้ให้ครบ 3 ต้น",
+      current: 3,
+      total: 3,
+      imageUrl: require("../assets/TreeA.jpeg"),
+      rewards: [
+        {
+          type: "coin",
+          amount: 50,
+          name: "NatureCoins",
+          image: require("../assets/NatureCoins.png"),
+        },
+      ],
+    },
+    {
+      id: 2,
+      challengeName: "ฝึกสมาธิ 30 นาที",
+      current: 15,
+      total: 30,
+      imageUrl: require("../assets/Timer.jpeg"),
+      rewards: [
+        {
+          type: "seed",
+          amount: 1,
+          name: "เมล็ดปริศนา",
+          image: require("../assets/Intro/Intro2.png"),
+        },
+      ],
+    },
+    {
+      id: 3,
+      challengeName: "โฟกัสแท็ก 'งาน' ให้ครบ 30 นาที",
+      current: 15,
+      total: 30,
+      imageUrl: require("../assets/Timer.jpeg"),
+      rewards: [
+        {
+          type: "seed",
+          amount: 1,
+          name: "เมล็ดงาน",
+          image: require("../assets/Intro/Intro2.png"),
+        },
+      ],
+    },
+    {
+      id: 4,
+      challengeName: "สุ่มกาชา 1 ครั้ง",
+      current: 0,
+      total: 1,
+      imageUrl: require("../assets/Intro/Intro2.png"),
+      rewards: [
+        {
+          type: "seed",
+          amount: 1,
+          name: "เมล็ดปริศนา",
+          image: require("../assets/Intro/Intro2.png"),
+        },
+      ],
+    },
+    {
+      id: 5,
+      challengeName: "ฝึกสมาธิ 3 ชั่วโมง",
+      current: 15,
+      total: 180,
+      imageUrl: require("../assets/Timer.jpeg"),
+      rewards: [
+        {
+          type: "seed",
+          amount: 1,
+          name: "เมล็ดปริศนา",
+          image: require("../assets/Intro/Intro2.png"),
+        },
+      ],
+    },
+    
+  ];
+
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Daily Login */}
       <DailyLogin />
-      {/* Title */}
-      
+  
       {/* Daily Challenges List */}
       <View style={styles.challengesList}>
-      <Text style={styles.title}>กิจกรรมประจำวัน</Text>
-        <DailyChallengesList
-          achievementName="โฟกัสติดต่อกันอย่างน้อย 30 นาที"
-          progress={0.3}
-          imageUrl={require("../assets/Timer.jpeg")} // แก้ไขการใช้ require เพื่อโหลดรูปภาพ
-        />
-        <DailyChallengesList
-          achievementName="ปลูกต้นไม้ 1 ต้น"
-          progress={0.5}
-          imageUrl={require("../assets/TreeA.jpeg")}
-        />
-        <DailyChallengesList
-          achievementName="ปลูกต้นไม้ 3 ต้น"
-          progress={0.7}
-          imageUrl={require("../assets/TreeA.jpeg")}
-        />
+        <Text style={styles.title}>กิจกรรมประจำวัน</Text>
+        {dailyChallenges.map((item) => (
+          <DailyChallengesList
+            key={item.id}
+            challengeName={item.challengeName}
+            current={item.current}
+            total={item.total}
+            imageUrl={item.imageUrl}
+            rewards={item.rewards}
+          />
+        ))}
       </View>
-    </View>
-  );
+    </ScrollView>
+  );  
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
     backgroundColor: "#E8E8E8",
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    color: "#333",
-    
+    color: "#343334",
+    fontFamily: "Mitr_Regular",    
   },
   challengesList: {
-    marginTop: 30,
-
+    marginTop: 20,
   },
+  
+
 });
 
 export default DailyChallenges;
