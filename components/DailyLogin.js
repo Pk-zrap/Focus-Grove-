@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ToastAndroid, Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const DailyLogin = () => {
-  // สร้างข้อมูลภาพตัวอย่างและสถานะการล็อคอิน
   const [loginStatus, setLoginStatus] = useState([false, false, false]);
-  const [nextAvailableTime, setNextAvailableTime] = useState(null); // เวลาถัดไปที่สามารถรับได้
+  const [nextAvailableTime, setNextAvailableTime] = useState(null);
 
-  // ฟังก์ชันสำหรับการรับไอเทม
   const handleReceiveItem = (index) => {
-    // เช็คว่าเมื่อไหร่สามารถรับได้ (เช็คว่าเวลาที่เก็บไว้ครบ 3 ชั่วโมงหรือไม่)
     const currentTime = new Date().getTime();
 
     if (!nextAvailableTime || currentTime >= nextAvailableTime) {
       const newLoginStatus = [...loginStatus];
       newLoginStatus[index] = true;
       setLoginStatus(newLoginStatus);
-      // เก็บเวลาถัดไปที่สามารถรับไอเทมได้ (3 ชั่วโมงจากเวลาปัจจุบัน)
+
       const nextTime = currentTime + 3 * 60 * 60 * 1000; // 3 ชั่วโมง
       setNextAvailableTime(nextTime);
     } else {
-      alert("กรุณารออีก 3 ชั่วโมงก่อนที่จะรับไอเทมถัดไป");
+      if (Platform.OS === "android") {
+        ToastAndroid.show(
+          "⏳ กรุณารออีก 3 ชั่วโมงก่อนที่จะรับไอเทมถัดไป",
+          ToastAndroid.SHORT
+        );
+      }
     }
   };
 
   useEffect(() => {
-    // เช็คเวลาเมื่อ component ถูก mount เพื่ออัปเดตสถานะการรับไอเทม
     const currentTime = new Date().getTime();
     if (nextAvailableTime && currentTime >= nextAvailableTime) {
-      setNextAvailableTime(null); // สามารถรับไอเทมถัดไปได้แล้ว
+      setNextAvailableTime(null);
     }
   }, [nextAvailableTime]);
 
@@ -38,19 +40,24 @@ const DailyLogin = () => {
         {loginStatus.map((status, index) => (
           <View key={index} style={styles.item}>
             <Image
-              source={status ? require("../assets/Exchange.jpeg") : require("../assets/Exchange.jpeg")}
+              source={require("../assets/NatureCoins.png")}
               style={styles.image}
             />
             <TouchableOpacity
               style={[styles.receiveButton, status && styles.receivedButton]}
               onPress={() => handleReceiveItem(index)}
-              disabled={status} // ปิดการใช้งานปุ่มหากได้รับแล้ว
+              disabled={status}
             >
-              <Text style={styles.buttonText}>{status ? "รับแล้ว" : "รับไอเทม"}</Text>
+              <Ionicons
+                name="checkmark-circle"
+                size={24}
+                color={status ? "#9B9B9B" : "#61A858"}
+              />
             </TouchableOpacity>
           </View>
         ))}
       </View>
+
       {nextAvailableTime && (
         <Text style={styles.timerText}>
           คุณสามารถรับไอเทมถัดไปได้ใน{" "}
@@ -66,9 +73,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
     alignItems: "center",
-    borderWidth: 2, 
-    borderColor: "#D3D9E3",
-    borderRadius:12,
+    borderRadius: 12,
     padding: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -78,7 +83,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
+    color: "#343334",
+    fontFamily: "Mitr_Regular",
     marginBottom: 20,
   },
   itemsContainer: {
@@ -91,27 +97,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 40,
+    height: 40,
     marginBottom: 10,
-    borderRadius:12
+    borderRadius: 12,
   },
   receiveButton: {
-    backgroundColor: "#4CAF50",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: "#A7DB46",
+    paddingVertical: 1,
+    paddingHorizontal: 1,
+    borderRadius: 25,
   },
   receivedButton: {
-    backgroundColor: "#A5D6A7",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
+    backgroundColor: "#D3D9E3",
+    paddingVertical: 1,
+    paddingHorizontal: 1,
+    borderRadius: 25,
   },
   timerText: {
-    fontSize: 14,
-    marginTop: 2,
+    fontSize: 12,
+    fontFamily: "Mitr_Regular",
+    marginTop: 8,
     color: "#888",
   },
 });
