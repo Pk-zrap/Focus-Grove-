@@ -1,29 +1,70 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ToastAndroid, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ToastAndroid,
+  Platform,
+  Modal,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const DailyLogin = () => {
   const [loginStatus, setLoginStatus] = useState([false, false, false]);
   const [nextAvailableTime, setNextAvailableTime] = useState(null);
+  const [isGetItem, setGetItem] = useState(false);
+  const [rewards, setRewards] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   const handleReceiveItem = (index) => {
     const currentTime = new Date().getTime();
 
     if (!nextAvailableTime || currentTime >= nextAvailableTime) {
-      const newLoginStatus = [...loginStatus];
-      newLoginStatus[index] = true;
-      setLoginStatus(newLoginStatus);
+      // ยังไม่อัปเดต loginStatus ทันที
+      setSelectedIndex(index);
 
-      const nextTime = currentTime + 3 * 60 * 60 * 1000; // 3 ชั่วโมง
-      setNextAvailableTime(nextTime);
+      const todayReward = [
+        {
+          type: "coin",
+          name: "Nature Coin",
+          amount: 50,
+          image: require("../assets/NatureCoins.png"),
+        },
+      ];
+      setRewards(todayReward);
+      setGetItem(true);
     } else {
       if (Platform.OS === "android") {
         ToastAndroid.show(
-          "⏳ กรุณารออีก 3 ชั่วโมงก่อนที่จะรับไอเทมถัดไป",
+          "⏳กรุณารออีก 3 ชั่วโมง ก่อนที่จะรับไอเทมถัดไป",
           ToastAndroid.SHORT
         );
       }
     }
+  };
+
+  const handleConfirm = () => {
+    if (selectedIndex !== null) {
+      const newLoginStatus = [...loginStatus];
+      newLoginStatus[selectedIndex] = true;
+      setLoginStatus(newLoginStatus);
+
+      const currentTime = new Date().getTime();
+      const nextTime = currentTime + 3 * 60 * 60 * 1000;
+      setNextAvailableTime(nextTime);
+    }
+
+    setSelectedIndex(null); // reset
+    setGetItem(false);
+    setRewards([]); // reset รางวัล
+  };
+
+  const handleCancel = () => {
+    setSelectedIndex(null);
+    setGetItem(false);
+    setRewards([]);
   };
 
   useEffect(() => {
@@ -64,6 +105,76 @@ const DailyLogin = () => {
           {new Date(nextAvailableTime).toLocaleTimeString()}
         </Text>
       )}
+
+      {/* MODAL: แสดงรางวัลที่ได้รับ */}
+      <Modal
+        visible={isGetItem}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCancel}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            {/* ปุ่ม X = ยกเลิกรางวัล */}
+            <TouchableOpacity style={styles.closeButton} onPress={handleCancel}>
+              <Ionicons name="close" size={28} color="#343334" />
+            </TouchableOpacity>
+
+            <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
+
+            <View style={styles.rewardImageContainer}>
+              {rewards.map((reward, index) => (
+                <View
+                  key={index}
+                  style={{ alignItems: "center", marginHorizontal: 10 }}
+                >
+                  {reward.image && (
+                    <Image
+                      source={
+                        typeof reward.image === "string"
+                          ? { uri: reward.image }
+                          : reward.image
+                      }
+                      style={styles.coinImage}
+                    />
+                  )}
+                </View>
+              ))}
+            </View>
+
+            {rewards.map((reward, index) => {
+              let symbol = "🎁";
+              switch (reward.type) {
+                case "coin":
+                  symbol = "🪙";
+                  break;
+                case "seed":
+                  symbol = "🌱";
+                  break;
+                case "box":
+                  symbol = "🎁";
+                  break;
+                default:
+                  symbol = "🎉";
+              }
+              return (
+                <Text key={index} style={styles.rewardText}>
+                  {reward.name
+                    ? `${symbol} ${reward.name} x ${reward.amount}`
+                    : `${symbol} x ${reward.amount}`}
+                </Text>
+              );
+            })}
+
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleConfirm}
+            >
+              <Text style={styles.modalButtonText}>ตกลง</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -119,6 +230,60 @@ const styles = StyleSheet.create({
     fontFamily: "Mitr_Regular",
     marginTop: 8,
     color: "#888",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 20,
+    alignItems: "center",
+  },
+  closeButton: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    zIndex: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    fontFamily: "Mitr_Regular",
+    marginBottom: 15,
+    color: "#343334",
+  },
+  rewardImageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    marginBottom: 10,
+  },
+  coinImage: {
+    width: 50,
+    height: 50,
+  },
+  rewardText: {
+    fontSize: 14,
+    fontFamily: "Mitr_Regular",
+    color: "#555",
+    marginVertical: 2,
+  },
+  modalButton: {
+    marginTop: 15,
+    backgroundColor: "#F2B501",
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+  },
+  modalButtonText: {
+    fontSize: 14,
+    color: "#fff",
+    fontFamily: "Mitr_Regular",
   },
 });
 

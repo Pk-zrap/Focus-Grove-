@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // ใช้ไอคอนจาก Expo
+import { Ionicons } from "@expo/vector-icons";
 
 const DailyChallengesList = ({ achievementName, progress, imageUrl }) => {
   const [currentProgress] = useState(new Animated.Value(progress * 100));
