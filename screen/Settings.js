@@ -1,16 +1,23 @@
+// ===================== Import Modules & Components =====================
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Switch, TouchableOpacity, ScrollView } from "react-native";
 
+// ===================== Settings Screen =====================
 const Settings = () => {
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true); // เสียง
-  const [isNotificationEnabled, setIsNotificationEnabled] = useState(true); // แจ้งเตือน
+  // ===================== State สำหรับเปิด/ปิดเสียง =====================
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  // ===================== State สำหรับเปิด/ปิดการแจ้งเตือน =====================
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
 
+  // ===================== ฟังก์ชัน toggle สำหรับเสียง =====================
   const toggleSound = () => setIsSoundEnabled(previousState => !previousState);
+  // ===================== ฟังก์ชัน toggle สำหรับการแจ้งเตือน =====================
   const toggleNotification = () => setIsNotificationEnabled(previousState => !previousState);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
+      {/* ===================== บัญชีผู้ใช้ ===================== */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>บัญชีผู้ใช้</Text>
         <TouchableOpacity style={styles.option}>
@@ -21,6 +28,7 @@ const Settings = () => {
         </TouchableOpacity>
       </View>
 
+      {/* ===================== การใช้งาน ===================== */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>การใช้งาน</Text>
         <TouchableOpacity style={styles.option}>
@@ -31,6 +39,7 @@ const Settings = () => {
         </TouchableOpacity>
       </View>
 
+      {/* ===================== ระบบเสียง / การแจ้งเตือน ===================== */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>ระบบเสียง / การแจ้งเตือน</Text>
         <View style={styles.switchRow}>
@@ -49,6 +58,7 @@ const Settings = () => {
         </View>
       </View>
 
+      {/* ===================== ข้อมูลเกม ===================== */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>ข้อมูลเกม</Text>
         <TouchableOpacity style={styles.option}>

@@ -1,6 +1,8 @@
-// App.js
+// ===================== Core & React Navigation Imports =====================
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
+
+// ===================== Screens =====================
 import Load from "./screen/Loading";
 import Intro1 from "./screen/Intro1";
 import Intro2 from "./screen/Intro2";
@@ -17,10 +19,15 @@ import RealForest from "./screen/RealForest";
 import Settings from "./screen/Settings";
 import DrawerNavigator from "./components/DrawerNavigator";
 
+// ===================== React Navigation Imports =====================
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
+// ===================== Gesture Handler Imports =====================
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+// ===================== Vector Icons Imports =====================
 import {
   Ionicons,
   FontAwesome5,
@@ -29,13 +36,19 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
+// ===================== Expo Font Imports =====================
 import { useFonts } from "expo-font";
 
+// ===================== Stack & Drawer Navigators =====================
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+
+// ===================== Main App Component =====================
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+
+  // ===================== Load custom fonts =====================
   const [fontsloaded] = useFonts({
     Sen: require("./assets/fonts/Sen-VariableFont_wght.ttf"),
     SenSemibold: require("./assets/fonts/Sen-SemiBold.ttf"),
@@ -46,12 +59,14 @@ const App = () => {
     Mitr_Bold: require("./assets/fonts/Mitr-Bold.ttf"),
   });
 
+  // ===================== Simulate loading screen =====================
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 5000); 
   }, []);
 
+  // ===================== Check if fonts are loaded =====================
   if (!fontsloaded) {
     return (
       <View style={styles.container}>
@@ -60,6 +75,7 @@ const App = () => {
     );
   }
 
+  // ===================== Drawer Navigator Structure =====================
   const DrawerNavigator = () => (
     <Drawer.Navigator
       screenOptions={{
@@ -157,6 +173,7 @@ const App = () => {
     </Drawer.Navigator>
   );
 
+  // ===================== App Main Navigation Structure =====================
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
@@ -169,6 +186,7 @@ const App = () => {
           />
         ) : (
           <>
+          {/* ===================== Intro Screens ===================== */}
             <Stack.Screen
               name="Intro1"
               component={Intro1}
@@ -189,6 +207,8 @@ const App = () => {
               component={Intro4}
               options={{ headerShown: false }}
             />
+
+            {/* ===================== Main App Screens ===================== */}
             <Stack.Screen
               name="DrawerNavigator"
               component={DrawerNavigator}

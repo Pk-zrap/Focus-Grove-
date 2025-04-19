@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// ===================== Import Modules & Components =====================
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 
+// ===================== ต้นไม้ตัวเลือก =====================
 const treeImages = [
   require("../assets/Tree/IMG_1310 1.png"),
   require("../assets/icon.png"),
@@ -26,6 +28,7 @@ const treeImages = [
   require("../assets/Tree/IMG_1310 1.png"),
 ];
 
+// ===================== แท็กตัวเลือก =====================
 const tagOptions = [
   { name: "การเรียน", color: "#FFD700" },
   { name: "งาน", color: "#6495ED" },
@@ -33,33 +36,19 @@ const tagOptions = [
   { name: "พักผ่อน", color: "#4B0082" },
 ];
 
+// ===================== BottomSheetOptions Component =====================
 const BottomSheetOptions = ({
   closeBottomSheet,
   setSelectedTree,
   setSelectedTime,
   setSelectedTag,
-  setIsPlanting,
 }) => {
+  // ===================== Local States =====================
   const [selectedLocalTree, setSelectedLocalTree] = useState(null);
   const [selectedLocalTime, setSelectedLocalTime] = useState(null);
   const [selectedLocalTag, setSelectedLocalTag] = useState(null);
-  const [isPlantingLocal, setIsPlantingLocal] = useState(false);
-  const [countdown, setCountdown] = useState(0);
 
-  useEffect(() => {
-    let interval;
-    if (isPlantingLocal && countdown > 0) {
-      interval = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
-    } else if (countdown === 0 && isPlantingLocal) {
-      setIsPlanting(false);
-      setIsPlantingLocal(false);
-      closeBottomSheet();
-    }
-    return () => clearInterval(interval);
-  }, [isPlantingLocal, countdown, closeBottomSheet, setIsPlanting]);
-
+  // ===================== Handlers for Selection =====================
   const handleTreeSelect = (tree) => setSelectedLocalTree(tree);
   const handleTimeSelect = (time) => setSelectedLocalTime(time);
   const handleTagSelect = (tag) => setSelectedLocalTag(tag);
@@ -69,28 +58,27 @@ const BottomSheetOptions = ({
       setSelectedTree(selectedLocalTree);
       setSelectedTime(selectedLocalTime);
       setSelectedTag(selectedLocalTag);
-      setIsPlanting(true);
-      setIsPlantingLocal(true);
-      setCountdown(selectedLocalTime * 60);
       closeBottomSheet();
     } else {
-      alert("กรุณาเลือกต้นไม้, เวลา และแท็ก ก่อนกดปุ่มปลูก");
+      alert("กรุณาเลือกต้นไม้, เวลา และแท็ก ก่อนกดปุ่มเลือก");
     }
   };
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-  };
-
+  // ===================== แบ่งต้นไม้เป็นกลุ่มละ 8 รูป (แสดงแบบ paging) =====================
   const groupTrees = [];
   for (let i = 0; i < treeImages.length; i += 8) {
     groupTrees.push(treeImages.slice(i, i + 8));
   }
 
+  // ===================== UI Layout =====================
   return (
     <ScrollView style={styles.container}>
+      {/* ===================== ปุ่มยกเลิก ===================== */}
+      <TouchableOpacity onPress={closeBottomSheet} style={styles.cancelButton}>
+        <Text style={styles.cancelButtonText}>ยกเลิก</Text>
+      </TouchableOpacity>
+
+      {/* ===================== เลือกต้นไม้ ===================== */}
       <Text style={styles.title}>เลือกต้นไม้</Text>
       <ScrollView
         horizontal
@@ -115,6 +103,7 @@ const BottomSheetOptions = ({
         ))}
       </ScrollView>
 
+      {/* ===================== Dot Indicator ===================== */}
       <View style={styles.dotsContainer}>
         <View style={styles.dot} />
         <View style={styles.dot} />
@@ -127,6 +116,7 @@ const BottomSheetOptions = ({
         <View style={styles.dot} />
       </View>
 
+      {/* ===================== เลือกเวลา ===================== */}
       <Text style={styles.title}>เลือกเวลา (นาที)</Text>
       <ScrollView
         horizontal
@@ -150,6 +140,7 @@ const BottomSheetOptions = ({
         })}
       </ScrollView>
 
+      {/* ===================== เลือกแท็ก ===================== */}
       <Text style={styles.title}>เลือกแท็ก</Text>
       <ScrollView
         horizontal
@@ -167,7 +158,7 @@ const BottomSheetOptions = ({
         ))}
       </ScrollView>
 
-      {/* Container for the selected info and the plant button */}
+      {/* ===================== แสดงผลลัพธ์ที่เลือก และปุ่มปลูก ===================== */}
       <View style={styles.bottomSection}>
         <View style={styles.selectedInfoContainer}>
           {selectedLocalTree && (
@@ -198,6 +189,8 @@ const BottomSheetOptions = ({
                 </View>
               </View>
             )}
+
+            {/* ===================== ข้อความแนะนำเมื่อยังไม่ได้เลือกอะไรเลย ===================== */}
             {!selectedLocalTree && !selectedLocalTime && !selectedLocalTag && (
               <Text style={styles.instructionText}>
                 เลือกต้นไม้, เวลา, และแท็ก
@@ -205,6 +198,8 @@ const BottomSheetOptions = ({
             )}
           </View>
         </View>
+
+        {/* ===================== ปุ่มเลือก ===================== */}
         <TouchableOpacity
           style={[
             styles.plantButton,
@@ -216,17 +211,9 @@ const BottomSheetOptions = ({
             !(selectedLocalTree && selectedLocalTime && selectedLocalTag)
           } // ปิดการใช้งานปุ่มถ้ายังไม่ได้เลือก
         >
-          <Text style={styles.plantButtonText}>ปลูก</Text>
+          <Text style={styles.plantButtonText}>เลือก</Text>
         </TouchableOpacity>
       </View>
-
-      {isPlantingLocal && (
-        <View style={styles.countdownContainer}>
-          <Text style={styles.countdownText}>
-            เวลาที่เหลือ: {formatTime(countdown)}
-          </Text>
-        </View>
-      )}
     </ScrollView>
   );
 };
@@ -355,14 +342,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#84BD00",
   },
-  countdownContainer: {
-    marginTop: 20,
-    alignItems: "center",
-  },
-  countdownText: {
-    fontSize: 16,
-    color: "#666",
-  },
   dotsContainer: {
     flexDirection: "row",
     gap: 10,
@@ -376,6 +355,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#D0D0D0",
     marginHorizontal: 5,
+  },
+  // ===================== Style สำหรับปุ่มยกเลิก =====================
+  cancelButton: {
+    position: "absolute",
+    top: 10,
+    right: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: "#D32F2F",
+    zIndex: 10,
+  },
+  cancelButtonText: {
+    color: "#FFF",
+    fontSize: 16,
   },
 });
 

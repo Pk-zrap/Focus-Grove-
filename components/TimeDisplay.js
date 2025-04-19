@@ -1,3 +1,4 @@
+// ===================== Import Modules & Components =====================
 import React, { useRef, useMemo, useState, useEffect } from "react";
 import {
   View,
@@ -6,38 +7,35 @@ import {
   StyleSheet,
   Image,
   Modal,
-  TouchableWithoutFeedback,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import BottomSheetOptions from "./BottomSheetOptions";
 
+// ===================== Main Component =====================
 const TimeDisplay = () => {
+  // ===================== State & Refs =====================
   const bottomSheetRef = useRef(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
   const [selectedTree, setSelectedTree] = useState(
     require("../assets/Tree/IMG_1310 1.png")
   );
   const [selectedTime, setSelectedTime] = useState(180);
-  const [remainingTime, setRemainingTime] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(180 * 60);
   const [selectedTag, setSelectedTag] = useState({
     name: "การเรียน",
     color: "blue",
   });
-
   const [isCounting, setIsCounting] = useState(false);
 
-  const openBottomSheet = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const closeBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
+  // ===================== Snap Points for Bottom Sheet =====================
   const snapPoints = useMemo(() => ["25%", "77%"], []);
 
+  // ===================== Bottom Sheet Functions =====================
+  const openBottomSheet = () => setIsBottomSheetOpen(true);
+  const closeBottomSheet = () => setIsBottomSheetOpen(false);
+
+  // ===================== Countdown Timer Logic =====================
   useEffect(() => {
     let timer;
     if (isCounting && remainingTime > 0) {
@@ -46,10 +44,12 @@ const TimeDisplay = () => {
       }, 1000);
     } else if (isCounting && remainingTime === 0) {
       setIsCounting(false);
+      setRemainingTime(selectedTime * 60);
     }
     return () => clearTimeout(timer);
-  }, [isCounting, remainingTime]);
+  }, [isCounting, remainingTime, selectedTime]);
 
+  // ===================== Format Time Function =====================
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
       .toString()
@@ -58,20 +58,28 @@ const TimeDisplay = () => {
     return `${mins} : ${secs}`;
   };
 
+  // ===================== Handle Planting =====================
   const handlePlant = () => {
     setRemainingTime(selectedTime * 60);
     setIsCounting(true);
   };
 
+  // ===================== Handle Cancel =====================
+  const handleCancel = () => {
+    setIsCounting(false);
+    setRemainingTime(selectedTime * 60);
+  };
+
+  // ===================== UI Rendering =====================
   return (
     <View style={styles.container}>
+      {/* ===================== Header ===================== */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.headertitle}>
             <Text style={styles.headertitleText}>เริ่มต้นปลูกกันเลย</Text>
           </View>
         </View>
-
         <View style={styles.headerRight}>
           <View style={styles.coinContainer}>
             <Image
@@ -89,10 +97,12 @@ const TimeDisplay = () => {
         </View>
       </View>
 
+      {/* ===================== Tree Image ===================== */}
       <View style={styles.imageContainer}>
         <Image source={selectedTree} style={styles.TreeImage} />
       </View>
 
+      {/* ===================== Tag Selector ===================== */}
       <TouchableOpacity
         style={styles.categoryContainer}
         onPress={openBottomSheet}
@@ -103,65 +113,50 @@ const TimeDisplay = () => {
         <Text style={styles.categoryText}>{selectedTag.name}</Text>
       </TouchableOpacity>
 
+      {/* ===================== Time Selector ===================== */}
       <TouchableOpacity style={styles.timeContainer} onPress={openBottomSheet}>
         <Text style={styles.timeText}>
-          {remainingTime > 0
+          {isCounting
             ? formatTime(remainingTime)
-            : `${selectedTime} : 00`}
+            : formatTime(selectedTime * 60)}
         </Text>
       </TouchableOpacity>
 
+      {/* ===================== Bottom Sheet Modal ===================== */}
       <Modal
         visible={isBottomSheetOpen}
         transparent={true}
         animationType="fade"
       >
-        <TouchableWithoutFeedback onPress={closeBottomSheet}>
-          <View style={styles.modalBackground}>
-            <BottomSheet
-              ref={bottomSheetRef}
-              index={1}
-              snapPoints={snapPoints}
-              enablePanDownToClose={false}
-            >
-              <BottomSheetView style={styles.bottomSheetContent}>
-                <BottomSheetOptions
-                  closeBottomSheet={closeBottomSheet}
-                  setSelectedTree={setSelectedTree}
-                  setSelectedTime={setSelectedTime}
-                  setSelectedTag={setSelectedTag}
-                  setIsPlanting={setIsCounting}
-                  setTimeRemaining={setRemainingTime}
-                  onPlantPress={() => {
-                    handlePlant();
-                    closeBottomSheet();
-                  }}
-                />
-              </BottomSheetView>
-            </BottomSheet>
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.modalBackground}>
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={1}
+            snapPoints={snapPoints}
+            enablePanDownToClose={false}
+          >
+            <BottomSheetView style={styles.bottomSheetContent}>
+              <BottomSheetOptions
+                closeBottomSheet={closeBottomSheet}
+                setSelectedTree={setSelectedTree}
+                setSelectedTime={setSelectedTime}
+                setSelectedTag={setSelectedTag}
+              />
+            </BottomSheetView>
+          </BottomSheet>
+        </View>
       </Modal>
 
-      <View style={styles.dotsContainer}>
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <Image source={require("../assets/ListT.png")} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-        <View style={styles.dot} />
-      </View>
-
+      {/* ===================== Plant / Cancel Button ===================== */}
       <TouchableOpacity
-        style={styles.plantButton}
-        onPress={handlePlant}
-        disabled={isCounting}
+        style={[
+          styles.plantButton,
+          isCounting && { backgroundColor: "#D32F2F" },
+        ]}
+        onPress={isCounting ? handleCancel : handlePlant}
       >
         <Text style={styles.plantButtonText}>
-          {isCounting ? "กำลังปลูก..." : "ปลูก"}
+          {isCounting ? "ยกเลิก" : "ปลูก"}
         </Text>
       </TouchableOpacity>
     </View>
@@ -169,11 +164,7 @@ const TimeDisplay = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 20,
-  },
+  container: { flex: 1, alignItems: "center", padding: 20 },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -181,24 +172,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 30,
   },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  mainButton: {
-    backgroundColor: "#FFC107",
-    width: 30,
-    height: 30,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  mainButtonText: {
-    color: "#FFF",
-    fontSize: 16,
-    fontFamily: "Sen",
-  },
+  headerLeft: { flexDirection: "row", alignItems: "center" },
   headertitle: {
     backgroundColor: "#FFFCF2",
     borderRadius: 8,
@@ -210,10 +184,7 @@ const styles = StyleSheet.create({
     color: "#9B9B9B",
     fontFamily: "Mitr_Regular",
   },
-  headerRight: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  headerRight: { flexDirection: "row", alignItems: "center" },
   coinContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -223,16 +194,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginRight: 10,
   },
-  coinImage: {
-    width: 16,
-    height: 16,
-    marginRight: 5,
-  },
-  coinText: {
-    fontSize: 14,
-    color: "#32343E",
-    fontFamily: "Sen",
-  },
+  coinImage: { width: 16, height: 16, marginRight: 5 },
+  coinText: { fontSize: 14, color: "#32343E", fontFamily: "Sen" },
   addButton: {
     backgroundColor: "#64DD17",
     width: 30,
@@ -251,9 +214,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   imageContainer: {
-    width: 280, 
-    height: 280, 
-    borderRadius: 140, 
+    width: 280,
+    height: 280,
+    borderRadius: 140,
     backgroundColor: "#FFFCF2",
     justifyContent: "center",
     alignItems: "center",
@@ -264,39 +227,26 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  TreeImage: {
-    width: 230, // Adjusted size
-    height: 230, // Adjusted size
-    resizeMode: "contain",
-  },
+  TreeImage: { width: 230, height: 230, resizeMode: "contain" },
   categoryContainer: {
-    width: 120, // Adjusted width
-    height: 35, // Adjusted height
+    width: 120,
+    height: 35,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFCF2",
-    borderRadius: 10, // Adjusted border radius
+    borderRadius: 10,
     marginBottom: 20,
   },
-  categoryDot: {
-    width: 12, // Adjusted size
-    height: 12, // Adjusted size
-    borderRadius: 6, // Adjusted radius
-    marginRight: 8, // Adjusted margin
-  },
-  categoryText: {
-    fontSize: 16,
-    color: "#32343E",
-    fontFamily: "Mitr_Regular",
-  },
+  categoryDot: { width: 12, height: 12, borderRadius: 6, marginRight: 8 },
+  categoryText: { fontSize: 16, color: "#32343E", fontFamily: "Mitr_Regular" },
   timeContainer: {
-    width: 300, // Adjusted width
-    height: 80, // Adjusted height
+    width: 300,
+    height: 80,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFCF2",
-    borderRadius: 12, // Adjusted border radius
+    borderRadius: 12,
     marginBottom: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -304,29 +254,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  timeText: {
-    fontSize: 45, // Adjusted font size
-    fontFamily: "Sen",
-    color: "#32343E",
-  },
-  dotsContainer: {
-    flexDirection: "row",
-    gap: 8, // Adjusted gap
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 25, // Adjusted margin bottom
-  },
-  dot: {
-    width: 8, // Adjusted size
-    height: 8, // Adjusted size
-    borderRadius: 4, // Adjusted radius
-    backgroundColor: "#D0D0D0",
-    marginHorizontal: 4, // Adjusted horizontal margin
-  },
+  timeText: { fontSize: 45, fontFamily: "Sen", color: "#32343E" },
   plantButton: {
     backgroundColor: "#FFC107",
-    paddingVertical: 12, // Adjusted padding
-    paddingHorizontal: 40, // Adjusted padding
+    paddingVertical: 12,
+    paddingHorizontal: 40,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -334,11 +266,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  plantButtonText: {
-    fontSize: 18,
-    fontFamily: "Sen",
-    color: "#FFF",
-  },
+  plantButtonText: { fontSize: 18, fontFamily: "Sen", color: "#FFF" },
   modalBackground: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
