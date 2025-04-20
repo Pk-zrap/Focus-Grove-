@@ -10,6 +10,7 @@ import {
   Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
 
 const DailyLogin = () => {
   const [loginStatus, setLoginStatus] = useState([false, false, false]);
@@ -113,17 +114,15 @@ const DailyLogin = () => {
         animationType="fade"
         onRequestClose={handleCancel}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.closeButton}>
-            <TouchableOpacity
-              style={styles.closeButtonS}
-              onPress={handleCancel}
-            >
-              <Ionicons name="close" size={28} color="#F2B501" />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.modalContent}>
+        {/* ปุ่ม X */}
+        <View style={styles.closeButton}>
+          <TouchableOpacity style={styles.closeButtonS} onPress={handleCancel}>
+            <Ionicons name="close" size={28} color="#F2B501" />
+          </TouchableOpacity>
+        </View>
+        <Pressable style={styles.modalOverlay} onPress={handleCancel}>
+          {/* ไม่ปิดเมื่อกดในเนื้อหา */}
+          <Pressable onPress={() => {}} style={styles.modalContent}>
             <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
 
             <View
@@ -182,8 +181,8 @@ const DailyLogin = () => {
             >
               <Text style={styles.modalButtonText}>ตกลง</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );
@@ -246,7 +245,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.6)",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
   },
   modalContainer: {
     flex: 1,

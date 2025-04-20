@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
   selectedText: {
     color: "#343334",
   },
-  
   progressText: {
     color: "#9B9B9B",
     fontFamily: "Mitr_Regular",
@@ -362,8 +361,8 @@ const styles = StyleSheet.create({
   },
   CloseButton: {
     alignSelf: "flex-end",
-    marginRight: 15,
-    marginBottom: -10,
+    marginRight: 10,
+    marginBottom: -15,
   },
   modalCloseButton: {
     alignSelf: "flex-end",

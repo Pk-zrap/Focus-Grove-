@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import dayjs from "dayjs";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
 
 const MonthlyTreeReward = ({
   loginDaysThisMonth = 0,
@@ -90,10 +91,7 @@ const MonthlyTreeReward = ({
         </View>
         {isCompleted && (
           <TouchableOpacity
-            style={[
-              styles.claimButton,
-              hasClaimed && styles.claimedButton,
-            ]}
+            style={[styles.claimButton, hasClaimed && styles.claimedButton]}
             disabled={hasClaimed}
             onPress={handleClaim}
           >
@@ -116,16 +114,24 @@ const MonthlyTreeReward = ({
         animationType="fade"
         onRequestClose={() => setShowModal(false)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.closeButton}>
-            <TouchableOpacity
-              style={styles.closeButtonS}
-              onPress={() => setShowModal(false)}
-            >
-              <Ionicons name="close" size={28} color="#F2B501" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.modalContainer}>
+        {/* ปุ่ม X */}
+        <View style={styles.closeButton}>
+          <TouchableOpacity
+            style={styles.closeButtonS}
+            onPress={() => setShowModal(false)}
+          >
+            <Ionicons name="close" size={28} color="#F2B501" />
+          </TouchableOpacity>
+        </View>
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => setShowModal(false)}
+        >
+          <Pressable
+            style={styles.modalContainer}
+            onPress={() => {}}
+            onStartShouldSetResponder={() => true}
+          >
             <Text style={styles.modalTitle}>คุณได้รับ {treeName}</Text>
             <Image source={treeImage} style={styles.modalImage} />
 
@@ -138,8 +144,8 @@ const MonthlyTreeReward = ({
             >
               <Text style={styles.modalButtonText}>ตกลง</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </ImageBackground>
   );
@@ -282,7 +288,7 @@ const styles = StyleSheet.create({
   },
   claimedButton: {
     borderColor: "#aaa",
-  },  
+  },
   progressFill: {
     height: "100%",
     backgroundColor: "#A4D96C",

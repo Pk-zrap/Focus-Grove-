@@ -9,6 +9,7 @@ import {
   Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
 
 const DailyChallengesList = ({
   challengeName,
@@ -105,78 +106,83 @@ const DailyChallengesList = ({
         animationType="fade"
         onRequestClose={() => setGetItem(false)}
       >
+        {/* ปุ่ม X  */}
         <View style={styles.closeButton}>
-          <TouchableOpacity
-            style={styles.closeButtonS}
-            onPress={() => setGetItem(false)}
-          >
-            <Ionicons name="close" size={28} color="#F2B501" />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.closeButtonS}
+          onPress={() => setGetItem(false)}
+        >
+          <Ionicons name="close" size={28} color="#F2B501" />
+        </TouchableOpacity>
+      </View>
+  <Pressable style={styles.modalOverlay} onPress={() => setGetItem(false)}>
+    <Pressable onPress={() => {}} style={styles.modalContentWrapper}>
 
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
 
+      <View style={styles.modalContent}>
+        <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          {rewards.map((reward, index) => (
             <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                flexWrap: "wrap",
-              }}
+              key={index}
+              style={{ alignItems: "center", marginHorizontal: 10 }}
             >
-              {rewards.map((reward, index) => (
-                <View
-                  key={index}
-                  style={{ alignItems: "center", marginHorizontal: 10 }}
-                >
-                  {reward.image && (
-                    <Image
-                      source={
-                        typeof reward.image === "string"
-                          ? { uri: reward.image }
-                          : reward.image
-                      }
-                      style={styles.coinImage}
-                    />
-                  )}
-                </View>
-              ))}
+              {reward.image && (
+                <Image
+                  source={
+                    typeof reward.image === "string"
+                      ? { uri: reward.image }
+                      : reward.image
+                  }
+                  style={styles.coinImage}
+                />
+              )}
             </View>
-
-            <View style={{ marginTop: 10 }}>
-              {rewards.map((reward, index) => {
-                let symbol = "🎁";
-                switch (reward.type) {
-                  case "coin":
-                    symbol = "🪙";
-                    break;
-                  case "seed":
-                    symbol = "🌱";
-                    break;
-                  case "box":
-                    symbol = "🎁";
-                    break;
-                }
-                return (
-                  <Text key={index} style={styles.rewardText}>
-                    {reward.name
-                      ? `${symbol} ${reward.name} x ${reward.amount}`
-                      : `${symbol} x ${reward.amount}`}
-                  </Text>
-                );
-              })}
-            </View>
-
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={handleConfirm}
-            >
-              <Text style={styles.modalButtonText}>ตกลง</Text>
-            </TouchableOpacity>
-          </View>
+          ))}
         </View>
-      </Modal>
+
+        <View style={{ marginTop: 10 }}>
+          {rewards.map((reward, index) => {
+            let symbol = "🎁";
+            switch (reward.type) {
+              case "coin":
+                symbol = "🪙";
+                break;
+              case "seed":
+                symbol = "🌱";
+                break;
+              case "box":
+                symbol = "🎁";
+                break;
+            }
+            return (
+              <Text key={index} style={styles.rewardText}>
+                {reward.name
+                  ? `${symbol} ${reward.name} x ${reward.amount}`
+                  : `${symbol} x ${reward.amount}`}
+              </Text>
+            );
+          })}
+        </View>
+
+        <TouchableOpacity
+          style={styles.modalButton}
+          onPress={handleConfirm}
+        >
+          <Text style={styles.modalButtonText}>ตกลง</Text>
+        </TouchableOpacity>
+      </View>
+    </Pressable>
+  </Pressable>
+</Modal>
+
     </View>
   );
 };
@@ -249,6 +255,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.6)",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContentWrapper: {
+    width: "100%",
     alignItems: "center",
   },
   modalContainer: {

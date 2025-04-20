@@ -9,6 +9,7 @@ import {
   Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
 
 const AchievementList = ({
   achievementName,
@@ -109,7 +110,7 @@ const AchievementList = ({
         animationType="fade"
         onRequestClose={() => setGetItem(false)}
       >
-        {/* ปุ่ม X */}
+        {/* ปุ่ม X คงไว้ */}
         <View style={styles.closeButton}>
           <TouchableOpacity
             style={styles.closeButtonS}
@@ -119,8 +120,13 @@ const AchievementList = ({
           </TouchableOpacity>
         </View>
 
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        {/* Pressable รอบนอก */}
+        <Pressable
+          style={styles.modalContainer}
+          onPress={() => setGetItem(false)}
+        >
+          {/* Pressable รอบเนื้อหา (กันไม่ให้ปิด modal เมื่อกดเนื้อหา) */}
+          <Pressable style={styles.modalContent} onPress={() => {}}>
             <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
             <View style={{ alignItems: "center", width: "100%" }}>
               {/* Reward Images */}
@@ -154,7 +160,7 @@ const AchievementList = ({
               {/* Reward Names */}
               <View style={{ marginTop: 10 }}>
                 {rewards.map((reward, index) => {
-                  let symbol = "🎁"; // default symbol
+                  let symbol = "🎁";
                   switch (reward.type) {
                     case "coin":
                       symbol = "🪙";
@@ -186,8 +192,8 @@ const AchievementList = ({
             >
               <Text style={styles.modalButtonText}>ตกลง</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );
@@ -335,8 +341,6 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 20,
     marginBottom: 20,
-    borderWidth: 2,
-    borderColor: "#D9D9D9",
     marginBottom: 5,
   },
   rewardText: {

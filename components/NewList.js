@@ -1,21 +1,18 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const NewList = ({ date, type, imageUrl, title }) => {
+const NewList = ({ date, type, imageUrl, title, onPress }) => {
   return (
-    <View style={styles.container}>
-      {/* รูปภาพโปรโมท */}
+    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.8}>
       <Image source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl} style={styles.image} />
-
-      {/* ข้อมูลข่าวสาร */}
       <View style={styles.infoContainer}>
         <Text style={styles.date}>{date}</Text>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title} numberOfLines={2}>{title}</Text>
         <View style={[styles.typeBadge, type === "Event" ? styles.eventBadge : styles.newsBadge]}>
           <Text style={styles.typeText}>{type}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -23,60 +20,61 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFCF3",
+    backgroundColor: "#fff",
     borderRadius: 12,
-    padding: 10,
+    padding: 15,
     marginVertical: 10,
-    marginHorizontal: 2,
+    marginHorizontal: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 3,
+    width: "95%",
+
   },
   image: {
-    width: 100, 
+    width: 100,
     height: 100,
-    borderRadius: 15,
-    marginRight: 15,
-    borderWidth: 2,
-    borderColor: "#ddd",
-    shadowColor: "#333",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    borderRadius: 16,
+    marginRight: 16,
+    borderWidth: 1,
+    borderColor: "#eee",
   },
   infoContainer: {
     flex: 1,
     justifyContent: "center",
   },
   date: {
-    fontSize: 14,
-    color: "#888",
+    fontSize: 12,
+    color: "#999",
     marginBottom: 4,
+    fontFamily: "Mitr_Regular",
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 6,
+    fontFamily: "Mitr_Regular",
   },
   typeBadge: {
     alignSelf: "flex-start",
     paddingVertical: 5,
     paddingHorizontal: 12,
-    borderRadius: 20,
-    marginTop: 6,
+    borderRadius: 18,
   },
   eventBadge: {
-    backgroundColor: "#FF5733",
+    backgroundColor: "#6F96",
+    
   },
   newsBadge: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#AED9E0",
   },
   typeText: {
     fontSize: 13,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  title: {
-    fontSize: 18, // ปรับให้ใหญ่ขึ้น
-    fontWeight: "bold",
     color: "#333",
+    fontWeight: "bold",
   },
 });
 
