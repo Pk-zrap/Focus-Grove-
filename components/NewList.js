@@ -22,21 +22,22 @@ const NewList = ({ date, type, imageUrl, title }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 12,
+    alignItems: "center",
+    backgroundColor: "#FFFCF3",
+    borderRadius: 12,
+    padding: 10,
     marginVertical: 10,
+    marginHorizontal: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 4, // สำหรับ Android
-    alignItems: "center",
+    elevation: 3,
   },
   image: {
-    width: 100,  // ขยายขนาดรูปภาพ
+    width: 100, 
     height: 100,
-    borderRadius: 15, // ทำให้ภาพโค้งมนขึ้น
+    borderRadius: 15,
     marginRight: 15,
     borderWidth: 2,
     borderColor: "#ddd",

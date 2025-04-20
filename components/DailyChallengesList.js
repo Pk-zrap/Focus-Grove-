@@ -10,7 +10,13 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const DailyChallengesList = ({ challengeName, current, total, rewards, imageUrl }) => {
+const DailyChallengesList = ({
+  challengeName,
+  current,
+  total,
+  rewards,
+  imageUrl,
+}) => {
   const progress = current / total;
   const [currentProgress] = useState(new Animated.Value(progress * 100));
   const [isCompleted, setIsCompleted] = useState(false);
@@ -39,7 +45,6 @@ const DailyChallengesList = ({ challengeName, current, total, rewards, imageUrl 
     setGetItem(false);
   };
 
-
   return (
     <View style={styles.container}>
       {/* DailyChallenges Image */}
@@ -66,10 +71,10 @@ const DailyChallengesList = ({ challengeName, current, total, rewards, imageUrl 
             ]}
           />
         </View>
-          <Text style={styles.progressText}>
-            {current}/{total}
-          </Text>
-        </View>
+        <Text style={styles.progressText}>
+          {current}/{total}
+        </Text>
+      </View>
 
       {/* Claim Button */}
       <TouchableOpacity
@@ -113,12 +118,25 @@ const DailyChallengesList = ({ challengeName, current, total, rewards, imageUrl 
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
 
-            <View style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
               {rewards.map((reward, index) => (
-                <View key={index} style={{ alignItems: "center", marginHorizontal: 10 }}>
+                <View
+                  key={index}
+                  style={{ alignItems: "center", marginHorizontal: 10 }}
+                >
                   {reward.image && (
                     <Image
-                      source={typeof reward.image === "string" ? { uri: reward.image } : reward.image}
+                      source={
+                        typeof reward.image === "string"
+                          ? { uri: reward.image }
+                          : reward.image
+                      }
                       style={styles.coinImage}
                     />
                   )}
@@ -150,7 +168,10 @@ const DailyChallengesList = ({ challengeName, current, total, rewards, imageUrl 
               })}
             </View>
 
-            <TouchableOpacity style={styles.modalButton} onPress={handleConfirm}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleConfirm}
+            >
               <Text style={styles.modalButtonText}>ตกลง</Text>
             </TouchableOpacity>
           </View>
@@ -303,7 +324,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
   },
-  
 });
 
 export default DailyChallengesList;

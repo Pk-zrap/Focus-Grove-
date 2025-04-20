@@ -123,50 +123,62 @@ const AchievementList = ({
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
             <View style={{ alignItems: "center", width: "100%" }}>
-              
-            {/* Reward Images */}
-            <View style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", marginBottom: 5 }}>
-              {rewards.map((reward, index) => (
-                <View key={index} style={{ alignItems: "center", marginHorizontal: 10 }}>
-                  {reward.image && (
-                    <Image
-                      source={typeof reward.image === "string" ? { uri: reward.image } : reward.image}
-                      style={styles.coinImage}
-                    />
-                  )}
-                </View>
-              ))}
+              {/* Reward Images */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  marginBottom: 5,
+                }}
+              >
+                {rewards.map((reward, index) => (
+                  <View
+                    key={index}
+                    style={{ alignItems: "center", marginHorizontal: 10 }}
+                  >
+                    {reward.image && (
+                      <Image
+                        source={
+                          typeof reward.image === "string"
+                            ? { uri: reward.image }
+                            : reward.image
+                        }
+                        style={styles.coinImage}
+                      />
+                    )}
+                  </View>
+                ))}
+              </View>
+
+              {/* Reward Names */}
+              <View style={{ marginTop: 10 }}>
+                {rewards.map((reward, index) => {
+                  let symbol = "🎁"; // default symbol
+                  switch (reward.type) {
+                    case "coin":
+                      symbol = "🪙";
+                      break;
+                    case "seed":
+                      symbol = "🌱";
+                      break;
+                    case "box":
+                      symbol = "🎁";
+                      break;
+                    default:
+                      symbol = "🎉";
+                  }
+
+                  return (
+                    <Text key={index} style={styles.rewardText}>
+                      {reward.name
+                        ? `${symbol} ${reward.name} x ${reward.amount}`
+                        : `${symbol} x ${reward.amount}`}
+                    </Text>
+                  );
+                })}
+              </View>
             </View>
-
-             {/* Reward Names */}
-            <View style={{ marginTop: 10 }}>
-            {rewards.map((reward, index) => {
-              let symbol = "🎁"; // default symbol
-              switch (reward.type) {
-                case "coin":
-                  symbol = "🪙";
-                  break;
-                case "seed":
-                  symbol = "🌱";
-                  break;
-                case "box":
-                  symbol = "🎁";
-                  break;
-                default:
-                  symbol = "🎉";
-              }
-
-              return (
-                <Text key={index} style={styles.rewardText}>
-                {reward.name
-                  ? `${symbol} ${reward.name} x ${reward.amount}`
-                  : `${symbol} x ${reward.amount}`}
-                </Text>
-              );
-            })}
-
-            </View>
-          </View>
 
             <TouchableOpacity
               style={styles.modalButton}
@@ -254,7 +266,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // Transparent overlay
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modalContent: {
     width: "70%",

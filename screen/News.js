@@ -24,13 +24,15 @@ const News = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 20,
     backgroundColor: "#E8E8E8",
-
+    justifyContent: "center",
+    alignItems: "center",
   },
   scrollContainer: {
     paddingBottom: 20,
-  },
+    alignItems: "center",
+  },  
 });
 
 export default News;

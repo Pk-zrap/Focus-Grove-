@@ -108,65 +108,83 @@ const DailyLogin = () => {
 
       {/* MODAL: แสดงรางวัลที่ได้รับ */}
       <Modal
-  visible={isGetItem}
-  transparent={true}
-  animationType="fade"
-  onRequestClose={handleCancel}
->
-  <View style={styles.modalContainer}>
-    <View style={styles.closeButton}>
-      <TouchableOpacity style={styles.closeButtonS} onPress={handleCancel}>
-        <Ionicons name="close" size={28} color="#F2B501" />
-      </TouchableOpacity>
-    </View>
-
-    <View style={styles.modalContent}>
-      <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
-
-      <View style={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
-        {rewards.map((reward, index) => (
-          <View key={index} style={{ alignItems: "center", marginHorizontal: 10 }}>
-            {reward.image && (
-              <Image
-                source={typeof reward.image === "string" ? { uri: reward.image } : reward.image}
-                style={styles.coinImage}
-              />
-            )}
+        visible={isGetItem}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCancel}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.closeButton}>
+            <TouchableOpacity
+              style={styles.closeButtonS}
+              onPress={handleCancel}
+            >
+              <Ionicons name="close" size={28} color="#F2B501" />
+            </TouchableOpacity>
           </View>
-        ))}
-      </View>
 
-      <View style={{ marginTop: 10 }}>
-        {rewards.map((reward, index) => {
-          let symbol = "🎁";
-          switch (reward.type) {
-            case "coin":
-              symbol = "🪙";
-              break;
-            case "seed":
-              symbol = "🌱";
-              break;
-            case "box":
-              symbol = "🎁";
-              break;
-          }
-          return (
-            <Text key={index} style={styles.rewardText}>
-              {reward.name
-                ? `${symbol} ${reward.name} x ${reward.amount}`
-                : `${symbol} x ${reward.amount}`}
-            </Text>
-          );
-        })}
-      </View>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>คุณได้รับรางวัล</Text>
 
-      <TouchableOpacity style={styles.modalButton} onPress={handleConfirm}>
-        <Text style={styles.modalButtonText}>ตกลง</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-</Modal>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              {rewards.map((reward, index) => (
+                <View
+                  key={index}
+                  style={{ alignItems: "center", marginHorizontal: 10 }}
+                >
+                  {reward.image && (
+                    <Image
+                      source={
+                        typeof reward.image === "string"
+                          ? { uri: reward.image }
+                          : reward.image
+                      }
+                      style={styles.coinImage}
+                    />
+                  )}
+                </View>
+              ))}
+            </View>
 
+            <View style={{ marginTop: 10 }}>
+              {rewards.map((reward, index) => {
+                let symbol = "🎁";
+                switch (reward.type) {
+                  case "coin":
+                    symbol = "🪙";
+                    break;
+                  case "seed":
+                    symbol = "🌱";
+                    break;
+                  case "box":
+                    symbol = "🎁";
+                    break;
+                }
+                return (
+                  <Text key={index} style={styles.rewardText}>
+                    {reward.name
+                      ? `${symbol} ${reward.name} x ${reward.amount}`
+                      : `${symbol} x ${reward.amount}`}
+                  </Text>
+                );
+              })}
+            </View>
+
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleConfirm}
+            >
+              <Text style={styles.modalButtonText}>ตกลง</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -303,7 +321,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
   },
-  
 });
 
 export default DailyLogin;

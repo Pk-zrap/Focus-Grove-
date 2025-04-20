@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 import DailyLogin from "../components/DailyLogin";
 import DailyChallengesList from "../components/DailyChallengesList";
+import MonthlyTreeReward from "../components/MonthlyTreeReward";
 
 const DailyChallenges = () => {
   const dailyChallenges = [
@@ -53,21 +54,6 @@ const DailyChallenges = () => {
     },
     {
       id: 4,
-      challengeName: "สุ่มกาชา 1 ครั้ง",
-      current: 0,
-      total: 1,
-      imageUrl: require("../assets/Intro/Intro2.png"),
-      rewards: [
-        {
-          type: "seed",
-          amount: 1,
-          name: "เมล็ดปริศนา",
-          image: require("../assets/Intro/Intro2.png"),
-        },
-      ],
-    },
-    {
-      id: 5,
       challengeName: "ฝึกสมาธิ 3 ชั่วโมง",
       current: 15,
       total: 180,
@@ -81,17 +67,51 @@ const DailyChallenges = () => {
         },
       ],
     },
-    
+    {
+      id: 5,
+      challengeName: "ฝึกสมาธิก่อนนอน",
+      current: 15,
+      total: 15,
+      imageUrl: require("../assets/Timer.jpeg"),
+      rewards: [
+        {
+          type: "seed",
+          amount: 1,
+          name: "ต้นฝันดี",
+          image: require("../assets/Intro/Intro3.png"),
+        },
+      ],
+    },
   ];
+
+  const [hasClaimedTree, setHasClaimedTree] = useState(false);
+  const loginDaysThisMonth = 15;
+  const treeDetails = {
+    treeName: "เห็ดกระจกแห่งมิติ",
+    treeImage: require("../assets/Tree/Uncommon_DimensionalMirrorMushroom.png"),
+    description: "ทำกิจกรรมประจำวันให้ครบ 15 ครั้งเพื่อรับ ",
+    requiredDays: 15,
+  };
 
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
+      {/* Monthly Tree Reward */}
+      <MonthlyTreeReward
+        loginDaysThisMonth={loginDaysThisMonth}
+        hasClaimed={hasClaimedTree}
+        treeName={treeDetails.treeName}
+        treeImage={treeDetails.treeImage}
+        requiredDays={treeDetails.requiredDays}
+        description={treeDetails.description}
+        onClaimReward={() => setHasClaimedTree(true)}
+      />
+
       {/* Daily Login */}
       <DailyLogin />
-  
+
       {/* Daily Challenges List */}
       <View style={styles.challengesList}>
         <Text style={styles.title}>กิจกรรมประจำวัน</Text>
@@ -107,7 +127,7 @@ const DailyChallenges = () => {
         ))}
       </View>
     </ScrollView>
-  );  
+  );
 };
 
 const styles = StyleSheet.create({
@@ -120,13 +140,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
     color: "#343334",
-    fontFamily: "Mitr_Regular",    
+    fontFamily: "Mitr_Regular",
   },
   challengesList: {
     marginTop: 20,
   },
-  
-
 });
 
 export default DailyChallenges;
