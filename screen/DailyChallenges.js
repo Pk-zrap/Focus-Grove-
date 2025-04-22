@@ -114,7 +114,6 @@ const DailyChallenges = () => {
         {/* Daily Login */}
         <DailyLogin />
         {/* Daily Challenges List */}
-
         <View style={styles.challengesList}>
           <Text style={styles.title}>กิจกรรมประจำวัน</Text>
           {dailyChallenges.map((item) => (
@@ -156,7 +155,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     paddingHorizontal: 20,
     paddingBottom: 30,
-
   },
 });
 

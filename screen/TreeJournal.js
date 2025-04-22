@@ -505,7 +505,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E8E8E8",
-    borderRadius: 30,
+    borderTopRightRadius:30,
+    borderTopLeftRadius:30,
     paddingBottom: 32,
   },
   categoryButtons: {

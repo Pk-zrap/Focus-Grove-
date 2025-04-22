@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
   },
   eventBadge: {
-    backgroundColor: "#6F96",
-    
+    backgroundColor: "#6F96",   
   },
   newsBadge: {
     backgroundColor: "#AED9E0",
