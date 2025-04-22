@@ -85,7 +85,7 @@ const DailyChallenges = () => {
   ];
 
   const [hasClaimedTree, setHasClaimedTree] = useState(false);
-  const loginDaysThisMonth = 15;
+  const loginDaysThisMonth = 10;
   const treeDetails = {
     treeName: "เห็ดกระจกแห่งมิติ",
     treeImage: require("../assets/Tree/Uncommon_DimensionalMirrorMushroom.png"),
@@ -98,34 +98,34 @@ const DailyChallenges = () => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      {/* Monthly Tree Reward */}
-      <MonthlyTreeReward
-        loginDaysThisMonth={loginDaysThisMonth}
-        hasClaimed={hasClaimedTree}
-        treeName={treeDetails.treeName}
-        treeImage={treeDetails.treeImage}
-        requiredDays={treeDetails.requiredDays}
-        description={treeDetails.description}
-        onClaimReward={() => setHasClaimedTree(true)}
-      />
+        {/* Monthly Tree Reward */}
+        <MonthlyTreeReward
+          loginDaysThisMonth={loginDaysThisMonth}
+          hasClaimed={hasClaimedTree}
+          treeName={treeDetails.treeName}
+          treeImage={treeDetails.treeImage}
+          requiredDays={treeDetails.requiredDays}
+          description={treeDetails.description}
+          onClaimReward={() => setHasClaimedTree(true)}
+        />
 
-      {/* Daily Login */}
-      <DailyLogin />
+        {/* Daily Login */}
+        <DailyLogin />
 
-      {/* Daily Challenges List */}
-      <View style={styles.challengesList}>
-        <Text style={styles.title}>กิจกรรมประจำวัน</Text>
-        {dailyChallenges.map((item) => (
-          <DailyChallengesList
-            key={item.id}
-            challengeName={item.challengeName}
-            current={item.current}
-            total={item.total}
-            imageUrl={item.imageUrl}
-            rewards={item.rewards}
-          />
-        ))}
-      </View>
+        {/* Daily Challenges List */}
+        <View style={styles.challengesList}>
+          <Text style={styles.title}>กิจกรรมประจำวัน</Text>
+          {dailyChallenges.map((item) => (
+            <DailyChallengesList
+              key={item.id}
+              challengeName={item.challengeName}
+              current={item.current}
+              total={item.total}
+              imageUrl={item.imageUrl}
+              rewards={item.rewards}
+            />
+          ))}
+        </View>
     </ScrollView>
   );
 };
