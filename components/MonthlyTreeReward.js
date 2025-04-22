@@ -50,15 +50,20 @@ const MonthlyTreeReward = ({
   };
 
   return (
-    <ImageBackground
-      source={require("../assets/bgDl.jpg")}
-      style={styles.horizontalCard}
-      imageStyle={styles.cardBackgroundImage}
-    >
+    <View style={[styles.horizontalCard]}>
       {treeImage && (
         <Image source={treeImage} style={styles.treeImageHorizontal} />
       )}
       <View style={styles.cardInfo}>
+      <View style={styles.timeRow}>
+          <AntDesign
+            name="clockcircleo"
+            size={14}
+            color="#666"
+            style={{ marginRight: 6 }}
+          />
+          <Text style={styles.timeRemaining}>{daysLeft}</Text>
+        </View>
         <Text style={styles.title}>{treeName}</Text>
         <Text style={styles.description}>
           {description} "{treeName}"
@@ -80,18 +85,10 @@ const MonthlyTreeReward = ({
         <Text style={styles.progressText}>
           {loginDaysThisMonth}/{requiredDays}
         </Text>
-        <View style={styles.timeRow}>
-          <AntDesign
-            name="clockcircleo"
-            size={14}
-            color="#666"
-            style={{ marginRight: 6 }}
-          />
-          <Text style={styles.timeRemaining}>{daysLeft}</Text>
-        </View>
+
         {isCompleted && (
           <TouchableOpacity
-            style={[styles.claimButton, hasClaimed && styles.claimedButton]}
+            style={[styles.claimButton, hasClaimed]}
             disabled={hasClaimed}
             onPress={handleClaim}
           >
@@ -102,6 +99,7 @@ const MonthlyTreeReward = ({
                 color={hasClaimed ? "#fff" : "#fff"}
                 style={{ marginRight: 0 }}
               />
+                <Text style={styles.claimButtonText}>รับรางวัล</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -147,31 +145,29 @@ const MonthlyTreeReward = ({
           </Pressable>
         </Pressable>
       </Modal>
-    </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   horizontalCard: {
     flexDirection: "row",
-    backgroundColor: "#fff",
+    backgroundColor: "#F2B501",
     borderRadius: 12,
     padding: 15,
     marginVertical: 14,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
+
   },
   cardBackgroundImage: {
     borderRadius: 12,
   },
   treeImageHorizontal: {
-    width: 120,
-    height: 140,
-    borderRadius: 20,
+    width: 130,
+    height: 130,
+    borderRadius: 90,
     marginRight: 16,
+    backgroundColor: "#fff",
+    marginTop: 20,
   },
   cardInfo: {
     flex: 1,
@@ -195,7 +191,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     height: 10,
-    backgroundColor: "#ddd",
+    backgroundColor: "#fff",
     borderRadius: 10,
     width: "100%",
     marginBottom: 6,
@@ -212,11 +208,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
-    backgroundColor: "#A7DB46",
+    backgroundColor: "#343334",
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 26,
+    padding: 15,
+    marginHorizontal: 40,
+
+  },
+  claimButtonText: {
+    fontSize: 12, 
+    color: "#fff",
+    fontFamily: "Mitr_Regular",
+    marginLeft: 6,
   },
   modalOverlay: {
     flex: 1,
@@ -298,7 +302,7 @@ const styles = StyleSheet.create({
     width: "30%",
     flexDirection: "row",
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf: "flex-end",
     justifyContent: "center",
     marginTop: 5,
     marginBottom: 6,

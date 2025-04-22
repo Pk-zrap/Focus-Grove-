@@ -62,8 +62,8 @@ const DailyChallenges = () => {
         {
           type: "seed",
           amount: 1,
-          name: "เมล็ดปริศนา",
-          image: require("../assets/Intro/Intro2.png"),
+          name: "เมล็ดทั่วไป",
+          image: require("../assets/Seed/Seed_Common.png"),
         },
       ],
     },
@@ -78,7 +78,7 @@ const DailyChallenges = () => {
           type: "seed",
           amount: 1,
           name: "ต้นฝันดี",
-          image: require("../assets/Intro/Intro3.png"),
+          image: require("../assets/Tree/Rare_GoodnightTree.png"),
         },
       ],
     },
@@ -98,6 +98,7 @@ const DailyChallenges = () => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
+      <View style={styles.yellowTopSection}>
         {/* Monthly Tree Reward */}
         <MonthlyTreeReward
           loginDaysThisMonth={loginDaysThisMonth}
@@ -108,11 +109,12 @@ const DailyChallenges = () => {
           description={treeDetails.description}
           onClaimReward={() => setHasClaimedTree(true)}
         />
-
+      </View>
+      <View style={styles.containerDaily}>
         {/* Daily Login */}
         <DailyLogin />
-
         {/* Daily Challenges List */}
+
         <View style={styles.challengesList}>
           <Text style={styles.title}>กิจกรรมประจำวัน</Text>
           {dailyChallenges.map((item) => (
@@ -126,13 +128,13 @@ const DailyChallenges = () => {
             />
           ))}
         </View>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     backgroundColor: "#E8E8E8",
   },
   title: {
@@ -142,8 +144,19 @@ const styles = StyleSheet.create({
     color: "#343334",
     fontFamily: "Mitr_Regular",
   },
+  containerDaily:{
+    padding: 20,
+  },
   challengesList: {
     marginTop: 20,
+  },
+  yellowTopSection: {
+    backgroundColor: "#F2B501",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+
   },
 });
 
