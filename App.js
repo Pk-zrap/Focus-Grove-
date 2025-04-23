@@ -17,6 +17,9 @@ import News from "./screen/News";
 import Shop from "./screen/Shop";
 import RealForest from "./screen/RealForest";
 import Settings from "./screen/Settings";
+
+import MyTrees from "./screen/MyTrees";
+
 import DrawerNavigator from "./components/DrawerNavigator";
 
 // ===================== React Navigation Imports =====================
@@ -214,6 +217,8 @@ const App = () => {
               component={DrawerNavigator}
               options={{ headerShown: false }} 
             />
+
+            
           </>
         )}
       </Stack.Navigator>

@@ -24,6 +24,9 @@ const Settings = () => {
           <Text style={styles.optionText}>แก้ไขโปรไฟล์</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.option}>
+          <Text style={styles.optionText}>ต้นไม้ของฉัน</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.option}>
           <Text style={styles.optionText}>สมัครสมาชิก Premium 💎</Text>
         </TouchableOpacity>
       </View>
@@ -79,10 +82,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontWeight: "bold",
     marginBottom: 20,
     color: "#333",
     textAlign: "center",
+    fontFamily: "Mitr_Regular",
   },
   section: {
     marginBottom: 30,
@@ -99,6 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginBottom: 10,
     color: "#444",
+    fontFamily: "Mitr_Regular",
   },
   option: {
     paddingVertical: 10,
@@ -106,6 +110,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 14,
     color: "#333",
+    fontFamily: "Mitr_Regular",
   },
   switchRow: {
     flexDirection: "row",
